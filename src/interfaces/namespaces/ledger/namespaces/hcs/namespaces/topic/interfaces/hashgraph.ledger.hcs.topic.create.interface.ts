@@ -63,6 +63,7 @@ import { KeyList, PublicKey } from "@hashgraph/sdk"
  * ```
  */
 export interface _ICreate {
+    
     /**
      * Topic access control key
      * @property {PublicKey | KeyList} key
@@ -152,5 +153,5 @@ export interface _ICreate {
      * validatorConsensusTimestamp: "1234567890.123456789"
      * ```
      */
-    validatorConsensusTimestamp?: string
+    validatorConsensusTimestamp: string
 }

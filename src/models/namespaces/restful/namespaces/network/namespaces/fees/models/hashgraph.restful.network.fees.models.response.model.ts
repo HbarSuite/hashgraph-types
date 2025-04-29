@@ -105,7 +105,7 @@ export class _Response implements IHashgraph.IRestful.INetwork.IFees.IResponse {
     /**
      * Creates an instance of _Response.
      * @constructor
-     * @param {Partial<_Response>} [data] - Initial response data
+     * @param {Partial<IHashgraph.IRestful.INetwork.IFees.IResponse>} [data] - Initial response data
      * 
      * @description Initializes a new fee response instance:
      * - Assigns fee collection if provided
@@ -115,7 +115,7 @@ export class _Response implements IHashgraph.IRestful.INetwork.IFees.IResponse {
      * Note: This model uses optional initialization to support
      * various response scenarios and partial updates.
      */
-    constructor(data?: Partial<_Response>) {
+    constructor(data?: Partial<IHashgraph.IRestful.INetwork.IFees.IResponse>) {
         if (data) {
             Object.assign(this, data);
         }

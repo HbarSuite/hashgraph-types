@@ -119,9 +119,7 @@ export class _General implements IHashgraph.IDID.IService.IGeneral {
      * Creates an instance of the _General class
      * 
      * @constructor
-     * @param {string} id - The service identifier
-     * @param {"LinkedDomains" | "DIDCommMessaging"} type - The service type
-     * @param {string} serviceEndpoint - The service endpoint URL
+     * @param {IHashgraph.IDID.IService.IGeneral} data - Partial data to initialize the service
      * @throws {Error} If any parameters are invalid or missing
      * @memberof _General
      * @description Initializes a new service instance with validation for:
@@ -140,19 +138,17 @@ export class _General implements IHashgraph.IDID.IService.IGeneral {
      * @public
      * @since 2.0.0
      */
-    constructor(id: string, type: "LinkedDomains" | "DIDCommMessaging", serviceEndpoint: string) {
-        if (!id || !id.match(/^did:hedera:.*#service-\d+$/)) {
+        constructor(data: IHashgraph.IDID.IService.IGeneral) {
+            Object.assign(this, data);
+
+        if (!this.id || !this.id.match(/^did:hedera:.*#service-\d+$/)) {
             throw new Error('Invalid service ID format');
         }
-        if (!type || (type !== 'LinkedDomains' && type !== 'DIDCommMessaging')) {
+        if (!this.type || (this.type !== 'LinkedDomains' && this.type !== 'DIDCommMessaging')) {
             throw new Error('Invalid service type');
         }
-        if (!serviceEndpoint || !serviceEndpoint.startsWith('https://')) {
+        if (!this.serviceEndpoint || !this.serviceEndpoint.startsWith('https://')) {
             throw new Error('Invalid service endpoint');
         }
-
-        this.id = id;
-        this.type = type;
-        this.serviceEndpoint = serviceEndpoint;
     }
 }

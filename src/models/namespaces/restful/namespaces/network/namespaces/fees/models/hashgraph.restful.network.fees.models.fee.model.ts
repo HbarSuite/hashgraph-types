@@ -80,7 +80,7 @@ export class _Fee implements IHashgraph.IRestful.INetwork.IFees.IFee {
     /**
      * Creates an instance of _Fee.
      * @constructor
-     * @param {Partial<_Fee>} [data] - Initial fee configuration
+     * @param {Partial<IHashgraph.IRestful.INetwork.IFees.IFee>} [data] - Initial fee configuration
      * 
      * @description Initializes a new fee configuration instance:
      * - Assigns gas amount if provided
@@ -90,7 +90,7 @@ export class _Fee implements IHashgraph.IRestful.INetwork.IFees.IFee {
      * Note: This model uses optional initialization to support
      * various fee calculation scenarios and updates.
      */
-    constructor(data?: Partial<_Fee>) {
+    constructor(data?: Partial<IHashgraph.IRestful.INetwork.IFees.IFee>) {
         if (data) {
             Object.assign(this, data);
         }

@@ -184,12 +184,7 @@ export class _FungibleToken implements IHashgraph.ILedger.IAccounts.IRequest.ITr
     /**
      * Creates a new instance of _FungibleToken
      * @constructor
-     * @param {string} token_id - The unique identifier of the fungible token
-     * @param {string} from - The sender's account ID
-     * @param {string} to - The receiver's account ID
-     * @param {number} amount - The amount of tokens to transfer
-     * @param {number} decimals - The number of decimal places for the token
-     * @param {string} [memo] - Optional memo for the transfer
+     * @param {Partial<IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IFungibleToken>} data - Partial data to initialize the fungible token transfer
      * @throws {Error} If any of the required parameters are invalid
      * @example
      * ```typescript
@@ -203,13 +198,8 @@ export class _FungibleToken implements IHashgraph.ILedger.IAccounts.IRequest.ITr
      * );
      * ```
      */
-    constructor(token_id: string, from: string, to: string, amount: number, decimals: number, memo?: string) {
-        this.token_id = token_id;
-        this.from = from;
-        this.to = to;
-        this.amount = amount;
-        this.decimals = decimals;
-        this.memo = memo;
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IFungibleToken) {
+        Object.assign(this, data);
 
         if (!this.token_id || typeof this.token_id !== 'string') {
             throw new Error('Invalid token_id: Must be a non-empty string');

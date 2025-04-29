@@ -60,12 +60,21 @@ export class _Create implements IHashgraph.ILedger.IAccounts.IRequest.ICreate {
     memo?: string;
 
     /**
-     * Sender account information containing optional key and ID
+     * Account creation authority
+     * @property {Object} sender
+     * @description Entity responsible for creating and funding the new account
+     * @type {Object}
+     * @memberof _ICreate
+     * @optional
+     * @remarks
+     * - Must have sufficient balance for account creation fee
+     * - Must have permission to create accounts
+     * - Controls initial account configuration
      * @example
      * ```typescript
-     * {
-     *   key: PublicKey.fromString("..."),
-     *   id: AccountId.fromString("0.0.123")
+     * sender: {
+     *   key: myPublicKey, // Sender's authentication key
+     *   id: AccountId.fromString("0.0.123456") // Sender's account ID
      * }
      * ```
      */
@@ -74,7 +83,7 @@ export class _Create implements IHashgraph.ILedger.IAccounts.IRequest.ICreate {
         type: () => Object,
         required: false
     })
-    sender: {
+    sender?: {
         key?: PublicKey | KeyList;
         id?: AccountId;
     };
@@ -88,7 +97,7 @@ export class _Create implements IHashgraph.ILedger.IAccounts.IRequest.ICreate {
         type: () => Number,
         required: true
     })
-    balance: number;
+    balance?: number;
 
     /**
      * Maximum number of tokens that can be associated with this account automatically
@@ -148,12 +157,7 @@ export class _Create implements IHashgraph.ILedger.IAccounts.IRequest.ICreate {
     /**
      * Creates a new account creation request with the specified parameters
      * 
-     * @param balance - Initial account balance in tinybars (must be non-negative)
-     * @param sender - Optional sender account details including key and ID
-     * @param maxAutomaticTokenAssociations - Optional maximum number of automatic token associations
-     * @param isReceiverSignatureRequired - Optional flag requiring receiver signatures
-     * @param isOfflineTransaction - Optional flag for offline transactions
-     * @param memo - Optional memo string for the account
+     * @param {IHashgraph.ILedger.IAccounts.IRequest.ICreate} data - Partial data to initialize the create
      * 
      * @throws {Error} If balance is negative or invalid
      * @throws {Error} If sender key is not PublicKey or KeyList
@@ -166,11 +170,12 @@ export class _Create implements IHashgraph.ILedger.IAccounts.IRequest.ICreate {
      * @example
      * ```typescript
      * // Basic account with just balance
-     * const basic = new _Create(1000000);
+     * const basic = new _Create(1000000, "none");
      * 
      * // Full featured account
      * const full = new _Create(
      *   1000000,
+     *   "partial",
      *   {
      *     key: PublicKey.fromString("..."),
      *     id: AccountId.fromString("0.0.123")
@@ -182,53 +187,43 @@ export class _Create implements IHashgraph.ILedger.IAccounts.IRequest.ICreate {
      * );
      * ```
      */
-    constructor(
-        balance: number,
-        sender?: { key?: PublicKey | KeyList; id?: AccountId },
-        maxAutomaticTokenAssociations?: number,
-        isReceiverSignatureRequired?: boolean,
-        isOfflineTransaction?: boolean,
-        memo?: string
-    ) {
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.ICreate) {
+        Object.assign(this, data);
+
         // Validate memo if provided
-        if (memo !== undefined && (typeof memo !== 'string' || memo.trim() === '')) {
+        if (this.memo !== undefined && (typeof this.memo !== 'string' || this.memo.trim() === '')) {
             throw new Error('Invalid memo. Must be a non-empty string.');
         }
-        this.memo = memo;
+        this.memo = this.memo;
 
         // Validate balance is non-negative number
-        if (typeof balance !== 'number' || balance < 0) {
+        if (typeof this.balance !== 'number' || this.balance < 0) {
             throw new Error('Invalid balance. Must be a non-negative number.');
         }
-        this.balance = balance;
         
         // Validate sender key and id if provided
-        if (sender) {
-            if (sender.key && !(sender.key instanceof PublicKey) && !(sender.key instanceof KeyList)) {
+        if (this.sender) {
+            if (this.sender.key && !(this.sender.key instanceof PublicKey) && !(this.sender.key instanceof KeyList)) {
                 throw new Error('Invalid sender key. Must be an instance of PublicKey or KeyList.');
             }
-            if (sender.id && !(sender.id instanceof AccountId)) {
+            if (this.sender.id && !(this.sender.id instanceof AccountId)) {
                 throw new Error('Invalid sender id. Must be an instance of AccountId.');
             }
-            this.sender = sender;
         }
 
         // Validate maxAutomaticTokenAssociations if provided
-        if (maxAutomaticTokenAssociations !== undefined && (typeof maxAutomaticTokenAssociations !== 'number' || maxAutomaticTokenAssociations < 0)) {
+        if (this.maxAutomaticTokenAssociations !== undefined && (typeof this.maxAutomaticTokenAssociations !== 'number' || this.maxAutomaticTokenAssociations < 0)) {
             throw new Error('Invalid maxAutomaticTokenAssociations. Must be a non-negative number.');
         }
-        this.maxAutomaticTokenAssociations = maxAutomaticTokenAssociations;
 
         // Validate isReceiverSignatureRequired is boolean if provided
-        if (isReceiverSignatureRequired !== undefined && typeof isReceiverSignatureRequired !== 'boolean') {
+        if (this.isReceiverSignatureRequired !== undefined && typeof this.isReceiverSignatureRequired !== 'boolean') {
             throw new Error('Invalid isReceiverSignatureRequired. Must be a boolean.');
         }
-        this.isReceiverSignatureRequired = isReceiverSignatureRequired;
 
         // Validate isOfflineTransaction is boolean if provided
-        if (isOfflineTransaction !== undefined && typeof isOfflineTransaction !== 'boolean') {
+        if (this.isOfflineTransaction !== undefined && typeof this.isOfflineTransaction !== 'boolean') {
             throw new Error('Invalid isOfflineTransaction. Must be a boolean.');
         }
-        this.isOfflineTransaction = isOfflineTransaction;
     }
 }

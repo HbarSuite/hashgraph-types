@@ -133,11 +133,7 @@ export class _ChunkInfo implements IHashgraph.ICommons.IChunkInfo {
     /**
      * Creates an instance of _ChunkInfo.
      * @constructor
-     * @param {IHashgraph.IRestful.ITransactions.ITransaction.IId} [initial_transaction_id] - The initial transaction ID
-     * @param {number} [number] - The number of the current chunk
-     * @param {number} [total] - The total number of chunks
-     * @param {number} [nonce] - A client-generated number to ensure transaction uniqueness
-     * @param {boolean} [scheduled] - Indicates if the transaction is scheduled
+     * @param {IHashgraph.ICommons.IChunkInfo} data - The data to initialize the instance
      * @throws {Error} Will throw an error if initial_transaction_id is not an object
      * @throws {Error} Will throw an error if number is not a positive integer
      * @throws {Error} Will throw an error if total is not a positive integer
@@ -156,39 +152,32 @@ export class _ChunkInfo implements IHashgraph.ICommons.IChunkInfo {
      *   true
      * );
      */
-    constructor(
-        initial_transaction_id?: IHashgraph.IRestful.ITransactions.ITransaction.IId,
-        number?: number,
-        total?: number,
-        nonce?: number,
-        scheduled?: boolean
-    ) {
+    constructor(data: IHashgraph.ICommons.IChunkInfo) {
+        Object.assign(this, data);
+
         // Validate initial_transaction_id parameter
-        if (initial_transaction_id !== undefined && typeof initial_transaction_id !== 'object') {
+        if (this.initial_transaction_id !== undefined && typeof this.initial_transaction_id !== 'object') {
             throw new Error('Invalid initial_transaction_id: must be an object')
         }
-        this.initial_transaction_id = initial_transaction_id
 
         // Validate number parameter
-        if (number !== undefined && (!Number.isInteger(number) || number < 1)) {
+        if (this.number !== undefined && (!Number.isInteger(this.number) || this.number < 1)) {
             throw new Error('Invalid number: must be a positive integer')
         }
-        this.number = number
 
         // Validate total parameter
-        if (total !== undefined && (!Number.isInteger(total) || total < 1)) {
+        if (this.total !== undefined && (!Number.isInteger(this.total) || this.total < 1)) {
             throw new Error('Invalid total: must be a positive integer')
         }
-        this.total = total
 
-        if (nonce !== undefined && (!Number.isInteger(nonce))) {
+        // Validate nonce parameter
+        if (this.nonce !== undefined && (!Number.isInteger(this.nonce))) {
             throw new Error('Invalid nonce: must be an integer')
         }
-        this.nonce = nonce
 
-        if (scheduled !== undefined && typeof scheduled !== 'boolean') {
+        // Validate scheduled parameter
+        if (this.scheduled !== undefined && typeof this.scheduled !== 'boolean') {
             throw new Error('Invalid scheduled: must be a boolean')
         }
-        this.scheduled = scheduled
     }
 }

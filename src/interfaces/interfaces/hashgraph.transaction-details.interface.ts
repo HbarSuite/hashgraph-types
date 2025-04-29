@@ -18,7 +18,7 @@ import { Status, TransactionId } from "@hashgraph/sdk"
  * The status indicates the current state, while the transactionId provides a unique reference.
  * @see Status
  * @see TransactionId
- * @see IHashgraph._ITransactionIdentity
+ * @see IHashgraph._ITransactionIdEntity
  * @example
  * ```typescript
  * const txDetails: _ITransactionDetails = {

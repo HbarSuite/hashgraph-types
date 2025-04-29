@@ -59,11 +59,11 @@ export class _Amount implements IHashgraph.IRestful.ICustomFees.IRoyalty.IAmount
     /**
      * Creates an instance of _Amount
      * @constructor
-     * @param {Partial<_Amount>} data - Initial data to create the royalty fee amount
+     * @param {Partial<IHashgraph.IRestful.ICustomFees.IRoyalty.IAmount>} data - Initial data to create the royalty fee amount
      * @throws {Error} If numerator or denominator are invalid types
      * @remarks All provided data is validated during instantiation
      */
-    constructor(data: Partial<_Amount>) {
+    constructor(data: Partial<IHashgraph.IRestful.ICustomFees.IRoyalty.IAmount>) {
         Object.assign(this, data);
 
         // Validate numerator is a number if provided

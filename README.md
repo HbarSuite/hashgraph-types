@@ -72,7 +72,7 @@ const txDetails = new Hashgraph.TransactionDetails({
 });
 
 // Transaction identity
-const txIdentity = new Hashgraph.TransactionIdentity({
+const txIdentity = new Hashgraph.TransactionIdEntity({
   signerPublicKey: "302a300506032b6570032100...",
   signature: "signed_transaction_bytes"
 });

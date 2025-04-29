@@ -101,7 +101,7 @@ export class _Entity implements IHashgraph.ICommons.IBalance.IEntity {
     /**
      * Creates an instance of _Entity
      * @constructor
-     * @param {Partial<_Entity>} [data] - Optional partial data to initialize the instance
+     * @param {Partial<IHashgraph.ICommons.IBalance.IEntity>} [data] - Optional partial data to initialize the instance
      * @throws {Error} Will throw an error if timestamp is invalid
      * @throws {Error} Will throw an error if balance is negative or undefined
      * @throws {Error} Will throw an error if tokens is not an array
@@ -116,27 +116,22 @@ export class _Entity implements IHashgraph.ICommons.IBalance.IEntity {
      *   tokens: [{ token_id: "0.0.1234", balance: 1000000 }]
      * });
      */
-    constructor(data?: Partial<_Entity>) {
-        if (data) {
-            // Initialize properties from provided data
-            this.timestamp = data.timestamp;
-            this.balance = data.balance;
-            this.tokens = data.tokens?.map(token => new _TokensInner(token));
+    constructor(data?: Partial<IHashgraph.ICommons.IBalance.IEntity>) {
+        Object.assign(this, data);
 
-            // Validate timestamp format
-            if (!this.timestamp || !this.isValidISODate(this.timestamp)) {
-                throw new Error('Invalid timestamp: must be a valid ISO 8601 date string');
-            }
+        // Validate timestamp format
+        if (!this.timestamp || !this.isValidISODate(this.timestamp)) {
+            throw new Error('Invalid timestamp: must be a valid ISO 8601 date string');
+        }
 
-            // Validate balance value
-            if (this.balance === undefined || this.balance < 0) {
-                throw new Error('Invalid balance: must be a non-negative number');
-            }
+        // Validate balance value
+        if (this.balance === undefined || this.balance < 0) {
+            throw new Error('Invalid balance: must be a non-negative number');
+        }
 
-            // Validate tokens array
-            if (!Array.isArray(this.tokens)) {
-                throw new Error('Invalid tokens: must be an array');
-            }
+        // Validate tokens array
+        if (!Array.isArray(this.tokens)) {
+            throw new Error('Invalid tokens: must be an array');
         }
     }
 

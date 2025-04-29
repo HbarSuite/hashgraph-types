@@ -89,7 +89,7 @@ export class _MultiBase implements IHashgraph.IDID.IOwnership.IMultiBase {
     /**
      * Creates an instance of the _MultiBase class
      * @constructor
-     * @param {string} privateKeyMultibase - The cryptographic key in multibase format
+     * @param {IHashgraph.IDID.IOwnership.IMultiBase} data - Partial data to initialize the multibase
      * @throws {Error} When:
      * - privateKeyMultibase is missing or empty
      * - Format is invalid (missing/wrong prefix)
@@ -110,10 +110,11 @@ export class _MultiBase implements IHashgraph.IDID.IOwnership.IMultiBase {
      * const invalid2 = new _MultiBase({ privateKeyMultibase: '' }); // Empty key
      * const invalid3 = new _MultiBase({ privateKeyMultibase: 'invalid' }); // Invalid format
      */
-    constructor(privateKeyMultibase: string) {
-        if (!privateKeyMultibase) {
+    constructor(data: IHashgraph.IDID.IOwnership.IMultiBase) {
+        Object.assign(this, data);
+
+        if (!this.privateKeyMultibase) {
             throw new Error('Cryptographic key in multibase format is required');
         }
-        this.privateKeyMultibase = privateKeyMultibase;
     }
 }

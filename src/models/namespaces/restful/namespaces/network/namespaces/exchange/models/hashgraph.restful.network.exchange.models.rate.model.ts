@@ -97,7 +97,7 @@ export class _Rate implements IHashgraph.IRestful.INetwork.IExchange.IRate {
     /**
      * Creates an instance of _Rate.
      * @constructor
-     * @param {Partial<_Rate>} [rate] - Initial rate data
+     * @param {Partial<IHashgraph.IRestful.INetwork.IExchange.IRate>} [rate] - Initial rate data
      * 
      * @description Initializes a new exchange rate instance:
      * - Assigns rate values if provided
@@ -107,7 +107,7 @@ export class _Rate implements IHashgraph.IRestful.INetwork.IExchange.IRate {
      * Note: This model uses optional initialization to support
      * various rate creation scenarios and partial updates.
      */
-    constructor(rate?: Partial<_Rate>) {
+    constructor(rate?: Partial<IHashgraph.IRestful.INetwork.IExchange.IRate>) {
         if (rate) {
             this.cent_equivalent = rate.cent_equivalent;
             this.expiration_time = rate.expiration_time;

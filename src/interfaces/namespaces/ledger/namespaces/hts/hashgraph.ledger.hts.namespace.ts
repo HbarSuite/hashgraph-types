@@ -17,6 +17,7 @@ import { _INft } from './namespaces/nft/hashgraph.ledger.hts.nft.namespace'
 import { _IUnpause } from './interfaces/hashgraph.ledger.hts.unpause.interface'
 import { _IAssociate } from './interfaces/hashgraph.ledger.hts.associate.interface'
 import { _IDissociate } from './interfaces/hashgraph.ledger.hts.dissociate.interface'
+import { _IFees } from './namespaces/fees/validators.token.fee.namespace'
 
 /**
  * Token service operations namespace for Hedera Token Service (HTS)
@@ -328,6 +329,21 @@ export namespace _IHTS {
      * @see {@link _INft} for detailed interface definitions
      */
     export import INft = _INft
+
+    /**
+     * Fees operations namespace
+     * @type {_IFees}
+     * @description Provides interfaces and types for managing token fees,
+     * including custom fee configurations and fee schedules.
+     * @memberof _IHTS
+     * @remarks
+     * Supported operations:
+     * - Custom fee configurations
+     * - Fee schedules
+     * - Fee collection
+     * @see {@link _IFees} for detailed interface definitions
+     */
+    export import IFees = _IFees
 
     /**
      * Atomic swap type definition

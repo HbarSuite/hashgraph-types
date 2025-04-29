@@ -1,6 +1,6 @@
 import { ApiProperty } from '@hsuite/nestjs-swagger';
 import { IsEnum, IsString, IsOptional, IsNumber, IsArray } from 'class-validator';
-import { NftId, AccountId, KeyList, PublicKey } from '@hashgraph/sdk';
+import { AccountId, KeyList, PublicKey } from '@hashgraph/sdk';
 import { TokenId } from '@hashgraph/sdk';
 import { IHashgraph, Hashgraph } from '../../../../../../../..';
 
@@ -110,7 +110,7 @@ export class _AllowanceApproval implements IHashgraph.ILedger.IAccounts.IRequest
     /**
      * The token ID for token or NFT allowances
      * @description Identifier of the token being approved for spending/transfer
-     * @type {TokenId | NftId | string}
+     * @type {TokenId | string}
      * @example
      * allowance.tokenId = '0.0.789'; // ID of token being approved
      */
@@ -121,7 +121,7 @@ export class _AllowanceApproval implements IHashgraph.ILedger.IAccounts.IRequest
     })
     @IsOptional()
     @IsString()
-    tokenId?: TokenId | NftId | string
+    tokenId?: TokenId | string
 
     /**
      * The amount being authorized
@@ -207,14 +207,7 @@ export class _AllowanceApproval implements IHashgraph.ILedger.IAccounts.IRequest
      * Creates an instance of _AllowanceApproval
      * @description Initializes a new allowance approval with validation
      * 
-     * @param {('hbar' | 'token' | 'nft')} type - Type of allowance
-     * @param {string} ownerAccountId - Owner account ID authorizing the allowance
-     * @param {string} spenderAccountId - Spender account ID being authorized
-     * @param {TokenId | NftId | string} [tokenId] - Token ID for token or NFT allowances
-     * @param {number} [amount] - Amount being authorized
-     * @param {number[]} [serialNumbers] - Array of NFT serial numbers
-     * @param {{topicId: string, consensusTimestamp: string}} [dao] - Optional DAO configuration
-     * @param {{key?: PublicKey | KeyList, id?: AccountId}} [sender] - Optional sender information
+     * @param {IHashgraph.ILedger.IAccounts.IRequest.IAllowanceApproval} data - Partial data to initialize the allowance approval
      * 
      * @throws {Error} If type is invalid
      * @throws {Error} If ownerAccountId is invalid
@@ -235,85 +228,66 @@ export class _AllowanceApproval implements IHashgraph.ILedger.IAccounts.IRequest
      *   100
      * );
      */
-    constructor(
-        type: 'hbar' | 'token' | 'nft',
-        ownerAccountId: string,
-        spenderAccountId: string,
-        tokenId?: TokenId | NftId | string,
-        amount?: number,
-        serialNumbers?: number[],
-        dao?: {topicId: string, consensusTimestamp: string},
-        sender?: { 
-            key?: PublicKey | KeyList,
-            id?: AccountId 
-        }
-    ) {
-        // Validate type
-        if (!['hbar', 'token', 'nft'].includes(type)) {
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.IAllowanceApproval) {
+        Object.assign(this, data);
+
+        if (!['hbar', 'token', 'nft'].includes(this.type)) {
             throw new Error('Invalid type. Must be "hbar", "token", or "nft".');
         }
-        this.type = type;
 
         // Validate ownerAccountId
-        if (typeof ownerAccountId !== 'string' || ownerAccountId.trim() === '') {
+        if (typeof this.ownerAccountId !== 'string' || this.ownerAccountId.trim() === '') {
             throw new Error('Invalid ownerAccountId. Must be a non-empty string.');
         }
-        this.ownerAccountId = ownerAccountId;
 
         // Validate spenderAccountId
-        if (typeof spenderAccountId !== 'string' || spenderAccountId.trim() === '') {
+        if (typeof this.spenderAccountId !== 'string' || this.spenderAccountId.trim() === '') {
             throw new Error('Invalid spenderAccountId. Must be a non-empty string.');
         }
-        this.spenderAccountId = spenderAccountId;
 
         // Validate tokenId if provided
-        if (tokenId !== undefined) {
-            if (typeof tokenId !== 'string' || tokenId.trim() === '') {
+        if (this.tokenId !== undefined) {
+            if (typeof this.tokenId !== 'string' || this.tokenId.trim() === '') {
                 throw new Error('Invalid tokenId. Must be a non-empty string.');
             }
-            this.tokenId = tokenId;
         }
 
         // Validate amount if provided
-        if (amount !== undefined) {
-            if (typeof amount !== 'string' && typeof amount !== 'number') {
+        if (this.amount !== undefined) {
+            if (typeof this.amount !== 'string' && typeof this.amount !== 'number') {
                 throw new Error('Invalid amount. Must be a string or number.');
             }
-            if (typeof amount === 'number' && amount < 0) {
+            if (typeof this.amount === 'number' && this.amount < 0) {
                 throw new Error('Invalid amount. Must be non-negative.');
             }
-            this.amount = amount;
         }
 
         // Validate serialNumbers if provided
-        if (serialNumbers !== undefined) {
-            if (!Array.isArray(serialNumbers)) {
+        if (this.serialNumbers !== undefined) {
+            if (!Array.isArray(this.serialNumbers)) {
                 throw new Error('Invalid serialNumbers. Must be an array of numbers.');
             }
-            if (!serialNumbers.every(num => typeof num === 'number' && num >= 0)) {
+            if (!this.serialNumbers.every(num => typeof num === 'number' && num >= 0)) {
                 throw new Error('Invalid serialNumbers. All elements must be non-negative numbers.');
             }
-            this.serialNumbers = serialNumbers;
         }
 
         // Validate dao if provided
-        if (dao !== undefined) {
-            if (typeof dao !== 'object' || !dao.topicId || !dao.consensusTimestamp ||
-                typeof dao.topicId !== 'string' || typeof dao.consensusTimestamp !== 'string') {
+        if (this.dao !== undefined) {
+            if (typeof this.dao !== 'object' || !this.dao.topicId || !this.dao.consensusTimestamp ||
+                typeof this.dao.topicId !== 'string' || typeof this.dao.consensusTimestamp !== 'string') {
                 throw new Error('Invalid dao configuration. Must include topicId and consensusTimestamp as strings.');
             }
-            this.dao = dao;
         }
 
         // Validate sender if provided
-        if (sender) {
-            if (sender.key && !(sender.key instanceof PublicKey) && !(sender.key instanceof KeyList)) {
+        if (this.sender) {
+            if (this.sender.key && !(this.sender.key instanceof PublicKey) && !(this.sender.key instanceof KeyList)) {
                 throw new Error('Invalid sender key. Must be a PublicKey or KeyList instance.');
             }
-            if (sender.id && !(sender.id instanceof AccountId)) {
+            if (this.sender.id && !(this.sender.id instanceof AccountId)) {
                 throw new Error('Invalid sender id. Must be an AccountId instance.');
             }
-            this.sender = sender;
         }
     }
 }

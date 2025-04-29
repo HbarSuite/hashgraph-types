@@ -17,7 +17,7 @@
  * Issuers are critical components in the DID ecosystem, responsible for creating
  * and managing verifiable credentials. Their DIDs must be properly registered
  * and maintained on the network.
- * @see IHashgraph._ITransactionIdentity
+ * @see IHashgraph._ITransactionIdEntity
  * @example
  * ```typescript
  * const issuer: _IIssuer = {

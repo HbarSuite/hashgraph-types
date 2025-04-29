@@ -121,7 +121,7 @@ export class _Response implements IHashgraph.IRestful.IAccounts.IResponse {
     /**
      * Creates an instance of _Response
      * @constructor
-     * @param {Partial<_Response>} [data] - Optional initialization data
+     * @param {Partial<IHashgraph.IRestful.IAccounts.IResponse>} [data] - Optional initialization data
      * @remarks
      * - Automatically transforms input data to proper types
      * - Initializes empty arrays if no accounts provided
@@ -143,7 +143,7 @@ export class _Response implements IHashgraph.IRestful.IAccounts.IResponse {
      * });
      * ```
      */
-    constructor(data?: Partial<_Response>) {
+    constructor(data?: Partial<IHashgraph.IRestful.IAccounts.IResponse>) {
         if (data) {
             this.accounts = data.accounts ? data.accounts.map(account => new _Info(account)) : [];
             this.links = data.links ? new _Links(data.links.next) : new _Links(null);

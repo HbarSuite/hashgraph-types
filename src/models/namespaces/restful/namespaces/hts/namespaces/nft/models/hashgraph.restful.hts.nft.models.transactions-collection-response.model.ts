@@ -88,13 +88,13 @@ export class _TransactionsCollectionResponse implements IHashgraph.IRestful.IHTS
     /**
      * Creates an instance of _TransactionsCollectionResponse
      * @constructor
-     * @param {Partial<_TransactionsCollectionResponse>} data - Initial data to create the collection response
+     * @param {Partial<IHashgraph.IRestful.IHTS.INft.ITransactionsCollectionResponse>} data - Initial data to create the collection response
      * @description Initializes a new NFT transactions collection response with the provided data.
      * If transaction data is provided, it creates new TransactionsResponse instances for each transaction.
      * If pagination links are provided, it creates a new Links instance.
      * @memberof _TransactionsCollectionResponse
      */
-    constructor(data: Partial<_TransactionsCollectionResponse>) {
+    constructor(data: Partial<IHashgraph.IRestful.IHTS.INft.ITransactionsCollectionResponse>) {
         if (data) {
             this.transactions = data.transactions ? data.transactions.map(tx => new _TransactionsResponse(tx)) : undefined;
             this.links = data.links ? new _Links(data.links.next) : undefined;

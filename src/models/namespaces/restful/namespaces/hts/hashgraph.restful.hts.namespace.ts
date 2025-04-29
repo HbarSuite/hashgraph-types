@@ -5,6 +5,7 @@ import { _Balance } from './namespaces/balance/hashgraph.restful.hts.balance.nam
 import { _Info } from './namespaces/info/hashgraph.restful.hts.info.namespace'
 import { _Nft } from './namespaces/nft/hashgraph.restful.hts.nft.namespace'
 import { _Relationship } from './namespaces/reltionship/hashgraph.restful.hts.reltionship.relationship.namespace'
+import { _Fungible } from "./namespaces/fungible/hashgraph.restful.hts.fungible.namespace"
 
 /**
  * Hashgraph Token Service (HTS) namespace containing interfaces and types for token-related operations
@@ -65,6 +66,15 @@ export namespace _HTS {
      * @category NFT
      */
     export import Nft = _Nft
+
+    /**
+     * Namespace containing interfaces related to Fungible Tokens (FTs)
+     * @description Includes interfaces for fungible token entities, responses, and transactions. Provides
+     * comprehensive support for fungible token operations including minting, transferring, and querying.
+     * @see {@link _Fungible} For detailed implementation of fungible token-related types
+     * @category Fungible Token
+     */
+    export import Fungible = _Fungible
 
     /**
      * Token class representing token details and properties

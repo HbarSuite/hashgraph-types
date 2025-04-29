@@ -78,7 +78,7 @@ export class _Payload implements IHashgraph.IDID.IVC.IList.IPayload {
      * Creates an instance of the _Payload class
      * 
      * @constructor
-     * @param {string} issuerDID - The DID of the credential issuer
+     * @param {IHashgraph.IDID.IVC.IList.IPayload} data - Partial data to initialize the payload
      * @throws {Error} When validation fails for the issuer DID
      * @memberof _Payload
      * @description Initializes a new payload instance with:
@@ -104,11 +104,12 @@ export class _Payload implements IHashgraph.IDID.IVC.IList.IPayload {
      * const invalidPayload2 = new _Payload("invalid:did");     // Error: Invalid issuerDID
      * const invalidPayload3 = new _Payload("did:other:123");   // Error: Invalid issuerDID
      */
-    constructor(issuerDID: string) {
+    constructor(data: IHashgraph.IDID.IVC.IList.IPayload) {
+        Object.assign(this, data);
+
         // Validate the issuerDID format and structure
-        if (!issuerDID || typeof issuerDID !== 'string' || !issuerDID.startsWith('did:hedera:')) {
+        if (!this.issuerDID || typeof this.issuerDID !== 'string' || !this.issuerDID.startsWith('did:hedera:')) {
             throw new Error('Invalid issuerDID');
         }
-        this.issuerDID = issuerDID;
     }
 }

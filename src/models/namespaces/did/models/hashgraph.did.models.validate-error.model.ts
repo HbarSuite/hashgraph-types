@@ -85,8 +85,7 @@ export class _ValidateErrorJSON implements IHashgraph.IDID.IValidateErrorJSON {
     /**
      * Creates an instance of _ValidateErrorJSON
      * @constructor
-     * @param {Object} details - Object containing validation error details
-     * @param {unknown} details[name] - Error message or details for each validation failure
+     * @param {IHashgraph.IDID.IValidateErrorJSON} data - Partial data to initialize the validate error json
      * @throws {Error} When details parameter is missing or invalid
      * @memberof _ValidateErrorJSON
      * @public
@@ -102,8 +101,7 @@ export class _ValidateErrorJSON implements IHashgraph.IDID.IValidateErrorJSON {
      *   }
      * });
      */
-    constructor(details: { [name: string]: unknown }) {
-        this.message = "Validation failed";
-        this.details = details;
+    constructor(data: IHashgraph.IDID.IValidateErrorJSON) {
+        Object.assign(this, data);
     }
 }

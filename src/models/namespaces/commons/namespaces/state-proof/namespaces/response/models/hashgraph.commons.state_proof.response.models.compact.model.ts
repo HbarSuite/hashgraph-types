@@ -115,7 +115,7 @@ export class _Compact implements IHashgraph.ICommons.IStateProof.IResponse.IComp
     /**
      * Creates an instance of _Compact
      * @constructor
-     * @param {Partial<_Compact>} [data] - Optional partial data to initialize the instance
+     * @param {IHashgraph.ICommons.IStateProof.IResponse.ICompact} [data] - Optional partial data to initialize the instance
      * @throws {Error} Will throw an error if address books array is empty or invalid
      * @throws {Error} Will throw an error if record file is invalid
      * @throws {Error} Will throw an error if signature files object is empty or invalid
@@ -132,28 +132,23 @@ export class _Compact implements IHashgraph.ICommons.IStateProof.IResponse.IComp
      *   version: 1
      * });
      */
-    constructor(data?: Partial<_Compact>) {
-        if (data) {
-            this.address_books = data.address_books;
-            this.record_file = data.record_file;
-            this.signature_files = data.signature_files;
-            this.version = data.version;
+    constructor(data?: Partial<IHashgraph.ICommons.IStateProof.IResponse.ICompact>) {
+        Object.assign(this, data);
 
-            if (!Array.isArray(this.address_books) || this.address_books.length === 0) {
-                throw new Error('Address books must be a non-empty array of strings');
-            }
+        if (!Array.isArray(this.address_books) || this.address_books.length === 0) {
+            throw new Error('Address books must be a non-empty array of strings');
+        }
 
-            if (!(this.record_file instanceof _RecordFile)) {
-                throw new Error('Record file must be an instance of _IRecordFile');
-            }
+        if (!(this.record_file instanceof _RecordFile)) {
+            throw new Error('Record file must be an instance of _IRecordFile');
+        }
 
-            if (typeof this.signature_files !== 'object' || Object.keys(this.signature_files).length === 0) {
-                throw new Error('Signature files must be a non-empty object');
-            }
+        if (typeof this.signature_files !== 'object' || Object.keys(this.signature_files).length === 0) {
+            throw new Error('Signature files must be a non-empty object');
+        }
 
-            if (typeof this.version !== 'number' || this.version < 1) {
-                throw new Error('Version must be a number greater than or equal to 1');
-            }
+        if (typeof this.version !== 'number' || this.version < 1) {
+            throw new Error('Version must be a number greater than or equal to 1');
         }
     }
 }

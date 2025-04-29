@@ -61,11 +61,11 @@ export class _Fallback implements IHashgraph.IRestful.ICustomFees.IRoyalty.IFall
     /**
      * Creates an instance of _Fallback
      * @constructor
-     * @param {Partial<_Fallback>} data - Initial data to create the fallback fee
+     * @param {Partial<IHashgraph.IRestful.ICustomFees.IRoyalty.IFallback>} data - Initial data to create the fallback fee
      * @throws {Error} If amount or denominating_token_id are invalid types
      * @remarks All provided data is validated during instantiation
      */
-    constructor(data: Partial<_Fallback>) {
+    constructor(data: Partial<IHashgraph.IRestful.ICustomFees.IRoyalty.IFallback>) {
         Object.assign(this, data);
 
         // Validate amount is a number if provided

@@ -176,10 +176,7 @@ export class _Operator implements IHashgraph.IOperator {
     /**
      * Creates a new operator instance.
      * @constructor
-     * @param {string} accountId - Account ID in shard.realm.num format
-     * @param {string} privateKey - Ed25519 private key in hex format
-     * @param {string} [publicKey] - Optional Ed25519 public key in hex format
-     * @param {string} [url] - Optional node URL with port
+     * @param {IHashgraph.IOperator} operator - The operator object to be converted into an instance of _Operator
      * @throws {Error} If accountId is not a valid Hedera account ID
      * @throws {Error} If privateKey is not a valid Ed25519 private key
      * @throws {Error} If publicKey is provided but not a valid Ed25519 public key
@@ -205,29 +202,29 @@ export class _Operator implements IHashgraph.IOperator {
      * );
      * ```
      */
-    constructor(accountId: string, privateKey: string, publicKey?: string, url?: string) {
+    constructor(operator: IHashgraph.IOperator) {
         // Validate accountId parameter
-        if (!accountId || typeof accountId !== 'string') {
+        if (!operator.accountId || typeof operator.accountId !== 'string') {
             throw new Error('Invalid account ID');
         }
-        this.accountId = accountId;
+        this.accountId = operator.accountId;
 
         // Validate privateKey parameter
-        if (!privateKey || typeof privateKey !== 'string') {
+        if (!operator.privateKey || typeof operator.privateKey !== 'string') {
             throw new Error('Invalid private key');
         }
-        this.privateKey = privateKey;
+        this.privateKey = operator.privateKey;
 
         // Validate optional publicKey parameter if provided
-        if (publicKey !== undefined && typeof publicKey !== 'string') {
+        if (operator.publicKey !== undefined && typeof operator.publicKey !== 'string') {
             throw new Error('Invalid public key');
         }
-        this.publicKey = publicKey;
+        this.publicKey = operator.publicKey;
 
         // Validate optional url parameter if provided
-        if (url !== undefined && typeof url !== 'string') {
+        if (operator.url !== undefined && typeof operator.url !== 'string') {
             throw new Error('Invalid URL');
         }
-        this.url = url;
+        this.url = operator.url;
     }
 }

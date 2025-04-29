@@ -158,11 +158,7 @@ export class _Hbar implements IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IH
     /**
      * Creates a new HBAR transfer instance
      * @constructor
-     * @param {number} amount - The amount of HBAR to transfer
-     * @param {string} from - The sender's account ID
-     * @param {string} to - The recipient's account ID
-     * @param {string} [memo] - Optional transfer memo
-     * @param {Hashgraph.Ledger.DAO.Config} [dao] - Optional DAO configuration
+     * @param {Partial<IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IHbar>} data - Partial data to initialize the HBAR transfer
      * @throws {Error} If any of the parameters are invalid
      * @example
      * const transfer = new _Hbar(
@@ -176,12 +172,8 @@ export class _Hbar implements IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IH
      *   })
      * );
      */
-    constructor(amount: number, from: string, to: string, memo?: string, dao?: Hashgraph.Ledger.DAO.Config) {
-        this.amount = amount;
-        this.from = from;
-        this.to = to;
-        this.memo = memo;
-        this.dao = dao;
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IHbar) {
+        Object.assign(this, data);
 
         if (!Number.isFinite(this.amount) || this.amount <= 0) {
             throw new Error('Invalid amount: Must be a positive number');

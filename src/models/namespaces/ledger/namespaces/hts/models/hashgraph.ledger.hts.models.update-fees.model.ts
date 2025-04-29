@@ -1,8 +1,9 @@
-import { CustomFixedFee, CustomFractionalFee, CustomRoyaltyFee, AccountId, KeyList, PublicKey } from "@hashgraph/sdk";
+import { AccountId, KeyList, PublicKey } from "@hashgraph/sdk";
 import { Hashgraph } from '../../../../../hashgraph.namespace';
 import { IHashgraph } from '../../../../../../interfaces/hashgraph.namespace';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsObject, IsOptional } from "class-validator";
+import { IsOptional } from "class-validator";
+import { _Fees } from "../namespaces/fees/validators.token.fee.namespace";
 
 /**
  * @file HTS Token Fee Update Model
@@ -131,53 +132,54 @@ export class _UpdateFees implements IHashgraph.ILedger.IHTS.IUpdateFees {
     };
 
     /**
-     * Custom Fees Array
-     * @type {Array<CustomRoyaltyFee | CustomFractionalFee | CustomFixedFee>}
-     * @description Array of custom fees to be updated for the token. Supports
-     * multiple fee types for comprehensive revenue models.
+     * Custom Fees Configuration
+     * @type {_Fees.CustomFees}
+     * @description Comprehensive configuration of custom fees to be updated for the token.
+     * Contains arrays of different fee types organized in a structured format.
      * 
-     * Fee Types:
-     * - CustomRoyaltyFee: NFT royalties
-     * - CustomFractionalFee: Percentage fees
-     * - CustomFixedFee: Fixed amount fees
+     * Fee Structure Components:
+     * - fixed_fees: Specific amount fees in HBAR or tokens
+     * - fractional_fees: Percentage-based fees with min/max limits
+     * - royalty_fees: Creator compensation fees with fallback options
      * 
-     * Validation Rules:
-     * - Non-empty array required
-     * - Valid fee configurations
-     * - Compatible fee types
-     * - Amount limitations
+     * Implementation Details:
+     * - Maximum 10 fees per token
+     * - Each fee requires a valid collector account
+     * - Fees can be denominated in HBAR or other tokens
+     * - Collectors can be exempted from fees
      * 
-     * Use Cases:
-     * - Revenue sharing
-     * - Service fees
-     * - Network costs
-     * - Creator royalties
+     * Business Applications:
+     * - Marketplace transaction fees
+     * - Creator royalties for NFTs
+     * - Protocol revenue models
+     * - Treasury management
      * 
      * @example
-     * customFees: [
-     *   new CustomFixedFee({
-     *     amount: 100,
-     *     denominatingTokenId: "0.0.123456"
-     *   }),
-     *   new CustomFractionalFee({
-     *     numerator: 1,
-     *     denominator: 100
-     *   })
-     * ]
+     * customFees: {
+     *   fixed_fees: [
+     *     { 
+     *       amount: 10, 
+     *       denominating_token_id: "0.0.123456", 
+     *       collector_account_id: "0.0.789" 
+     *     }
+     *   ],
+     *   fractional_fees: [
+     *     { 
+     *       amount: { numerator: 5, denominator: 100 },
+     *       minimum: 1,
+     *       maximum: 100,
+     *       collector_account_id: "0.0.789"
+     *     }
+     *   ],
+     *   royalty_fees: []
+     * }
      */
     @ApiProperty({
-        description: 'Array of custom fees to be updated for the token',
-        type: 'array',
-        items: {
-            oneOf: [
-                { $ref: '#/components/schemas/CustomRoyaltyFee' },
-                { $ref: '#/components/schemas/CustomFractionalFee' },
-                { $ref: '#/components/schemas/CustomFixedFee' }
-            ]
-        },
+        description: 'Custom fees configuration to be updated for the token',
+        type: () => _Fees.CustomFees,
         required: true
     })
-    customFees: Array<CustomRoyaltyFee | CustomFractionalFee | CustomFixedFee>
+    customFees: _Fees.CustomFees;
 
     /**
      * DAO Configuration
@@ -276,12 +278,10 @@ export class _UpdateFees implements IHashgraph.ILedger.IHTS.IUpdateFees {
      */
     constructor(data: IHashgraph.ILedger.IHTS.IUpdateFees) {
         // Set the custom fees from the provided data
-        this.customFees = data.customFees;
+        this.customFees = new _Fees.CustomFees(data.customFees);
 
-        // Validate that custom fees array is provided and not empty
-        if (!this.customFees || this.customFees.length === 0) {
-            throw new Error('Custom fees are required and cannot be empty');
-        }
+        // Validate custom fees
+        this.customFees.validate();
 
         // Validate sender if provided
         if (data.sender) {

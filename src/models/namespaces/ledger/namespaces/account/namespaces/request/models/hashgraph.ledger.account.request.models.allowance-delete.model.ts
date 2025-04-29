@@ -1,7 +1,8 @@
 import { ApiProperty } from '@hsuite/nestjs-swagger';
-import { IsString, IsOptional } from 'class-validator';
-import { NftId, AccountId, KeyList, PublicKey } from '@hashgraph/sdk';
+import { IsString, IsOptional, IsArray, IsNumber, IsEnum } from 'class-validator';
+import { AccountId, KeyList, PublicKey, TokenId } from '@hashgraph/sdk';
 import { IHashgraph, Hashgraph } from '../../../../../../../..';
+import { Token } from 'nodemailer/lib/xoauth2';
 
 /**
  * Class implementing the Hashgraph NFT allowance deletion interface.
@@ -27,6 +28,23 @@ import { IHashgraph, Hashgraph } from '../../../../../../../..';
  */
 export class _AllowanceDelete implements IHashgraph.ILedger.IAccounts.IRequest.IAllowanceDelete {
     /**
+     * The type of allowance being approved
+     * @description Specifies whether this is an HBAR, token, or NFT allowance
+     * @type {'hbar' | 'token' | 'nft'}
+     * @example
+     * allowance.type = 'hbar';  // For HBAR allowances
+     * allowance.type = 'token'; // For fungible token allowances
+     * allowance.type = 'nft';   // For non-fungible token allowances
+     */
+    @ApiProperty({
+        description: 'Type of allowance (hbar, token, or nft)',
+        enum: ['hbar', 'token', 'nft'],
+        required: true
+    })
+    @IsEnum(['hbar', 'token', 'nft'])
+    type: 'hbar' | 'token' | 'nft';
+        
+    /**
      * The account ID of the owner deleting the NFT allowance
      * @type {string}
      * @example "0.0.123"
@@ -41,19 +59,52 @@ export class _AllowanceDelete implements IHashgraph.ILedger.IAccounts.IRequest.I
     ownerAccountId: string;
 
     /**
-     * The NFT ID of the NFT allowance being deleted
+     * The account ID of the spender being authorized
+     * @description Account ID that is being granted permission to spend/transfer assets
      * @type {string}
-     * @note The total number of NFT serial number deletions cannot exceed 20 per transaction
-     * @example "0.0.456"
+     * @example
+     * allowance.spenderAccountId = '0.0.456'; // Account receiving permission
      */
     @ApiProperty({
-        description: 'NFT ID of the allowance being deleted',
+        description: 'Spender account ID being authorized',
         type: String,
-        required: true,
-        example: "0.0.456"
+        required: true
     })
     @IsString()
-    nftId: NftId | string;
+    spenderAccountId: string;    
+
+    /**
+     * The token ID for token or NFT allowances
+     * @description Identifier of the token being approved for spending/transfer
+     * @type {TokenId | string}
+     * @example
+     * allowance.tokenId = '0.0.789'; // ID of token being approved
+     */
+    @ApiProperty({
+        description: 'Token ID for token or NFT allowances',
+        type: String,
+        required: false
+    })
+    @IsOptional()
+    @IsString()
+    tokenId?: TokenId | string
+
+    /**
+     * Array of NFT serial numbers
+     * @description List of specific NFT serial numbers being approved for transfer
+     * @type {number[]}
+     * @example
+     * allowance.serialNumbers = [1, 2, 3]; // Specific NFTs approved
+     */
+    @ApiProperty({
+        description: 'Array of NFT serial numbers for specific NFT allowances',
+        type: [Number],
+        required: false
+    })
+    @IsOptional()
+    @IsArray()
+    @IsNumber({}, { each: true })
+    serialNumbers?: number[];    
 
     /**
      * Optional sender information for the allowance deletion
@@ -106,16 +157,11 @@ export class _AllowanceDelete implements IHashgraph.ILedger.IAccounts.IRequest.I
 
     /**
      * Creates an instance of _AllowanceDelete for NFT allowance deletion
-     * @param {string} ownerAccountId - The account ID of the owner deleting the allowance
-     * @param {string} nftId - The NFT ID of the allowance being deleted
-     * @param {Object} [dao] - Optional DAO configuration
-     * @param {string} dao.topicId - The topic ID for the DAO consensus
-     * @param {string} dao.consensusTimestamp - The consensus timestamp
-     * @param {Object} [sender] - Optional sender information
-     * @param {PublicKey | KeyList} [sender.key] - The public key or key list
-     * @param {AccountId} [sender.id] - The sender's account ID
+     * @param {IHashgraph.ILedger.IAccounts.IRequest.IAllowanceDelete} data - Partial data to initialize the allowance delete
      * @throws {Error} If ownerAccountId is not a valid non-empty string
-     * @throws {Error} If nftId is not a valid non-empty string
+     * @throws {Error} If spenderAccountId is not a valid non-empty string
+     * @throws {Error} If tokenId is not a valid non-empty string
+     * @throws {Error} If serialNumbers is not an array of numbers
      * @throws {Error} If dao is provided but missing required fields or has invalid types
      * @throws {Error} If sender contains invalid key or id types
      * @example
@@ -132,48 +178,55 @@ export class _AllowanceDelete implements IHashgraph.ILedger.IAccounts.IRequest.I
      *   }
      * );
      */
-    constructor(
-        ownerAccountId: string,
-        nftId: NftId | string,
-        dao?: {
-            topicId: string;
-            consensusTimestamp: string;
-        },
-        sender?: { 
-            key?: PublicKey | KeyList,
-            id?: AccountId 
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.IAllowanceDelete) {
+        Object.assign(this, data);
+
+        // Validate type
+        if (!['hbar', 'token', 'nft'].includes(this.type)) {
+            throw new Error('Invalid type. Must be "hbar", "token", or "nft".');
         }
-    ) {
+
         // Validate ownerAccountId
-        if (typeof ownerAccountId !== 'string' || ownerAccountId.trim() === '') {
+        if (typeof this.ownerAccountId !== 'string' || this.ownerAccountId.trim() === '') {
             throw new Error('Invalid ownerAccountId. Must be a non-empty string.');
         }
-        this.ownerAccountId = ownerAccountId;
+
+        // Validate spenderAccountId
+        if (typeof this.spenderAccountId !== 'string' || this.spenderAccountId.trim() === '') {
+            throw new Error('Invalid spenderAccountId. Must be a non-empty string.');
+        }
 
         // Validate nftId
-        if (typeof nftId !== 'string' || nftId.trim() === '') {
+        if (typeof this.tokenId !== 'string' || this.tokenId.trim() === '') {
             throw new Error('Invalid nftId. Must be a non-empty string.');
         }
-        this.nftId = nftId;
+
+        // Validate serialNumbers if provided
+        if (this.serialNumbers !== undefined) {
+            if (!Array.isArray(this.serialNumbers)) {
+                throw new Error('Invalid serialNumbers. Must be an array of numbers.');
+            }
+            if (!this.serialNumbers.every(num => typeof num === 'number' && num >= 0)) {
+                throw new Error('Invalid serialNumbers. All elements must be non-negative numbers.');
+            }
+        }        
 
         // Validate dao if provided
-        if (dao !== undefined) {
-            if (typeof dao !== 'object' || !dao.topicId || !dao.consensusTimestamp ||
-                typeof dao.topicId !== 'string' || typeof dao.consensusTimestamp !== 'string') {
+        if (this.dao !== undefined) {
+            if (typeof this.dao !== 'object' || !this.dao.topicId || !this.dao.consensusTimestamp ||
+                typeof this.dao.topicId !== 'string' || typeof this.dao.consensusTimestamp !== 'string') {
                 throw new Error('Invalid dao configuration. Must include topicId and consensusTimestamp as strings.');
             }
-            this.dao = dao;
         }
 
         // Validate sender if provided
-        if (sender) {
-            if (sender.key && !(sender.key instanceof PublicKey) && !(sender.key instanceof KeyList)) {
+        if (this.sender) {
+            if (this.sender.key && !(this.sender.key instanceof PublicKey) && !(this.sender.key instanceof KeyList)) {
                 throw new Error('Invalid sender key. Must be a PublicKey or KeyList instance.');
             }
-            if (sender.id && !(sender.id instanceof AccountId)) {
+            if (this.sender.id && !(this.sender.id instanceof AccountId)) {
                 throw new Error('Invalid sender id. Must be an AccountId instance.');
             }
-            this.sender = sender;
         }
     }
 }

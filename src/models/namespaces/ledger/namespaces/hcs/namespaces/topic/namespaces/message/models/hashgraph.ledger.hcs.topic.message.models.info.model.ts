@@ -220,41 +220,35 @@ export class _Info implements IHashgraph.ILedger.IHCS.ITopic.IMessage.IInfo {
      *   }
      * );
      */
-    constructor(
-        callbackSuccess: IHashgraph.ILedger.IHCS.ICallback.ISuccess,
-        start: number,
-        end: number,
-        limit: number,
-        callbackError: IHashgraph.ILedger.IHCS.ICallback.IError
-    ) {
+    constructor(data: IHashgraph.ILedger.IHCS.ITopic.IMessage.IInfo) {
         // Validate and assign callback success function
-        if (typeof callbackSuccess !== 'function') {
+        if (typeof data.callbackSuccess !== 'function') {
             throw new Error('callbackSuccess must be a function')
         }
-        this.callbackSuccess = callbackSuccess
+        this.callbackSuccess = data.callbackSuccess
 
         // Validate and assign start sequence number
-        if (!Number.isInteger(start) || start < 0) {
+        if (!Number.isInteger(data.start) || data.start < 0) {
             throw new Error('start must be a non-negative integer')
         }
-        this.start = start
+        this.start = data.start
 
         // Validate and assign end sequence number
-        if (!Number.isInteger(end) || end < start) {
+        if (!Number.isInteger(data.end) || data.end < data.start) {
             throw new Error('end must be an integer greater than or equal to start')
         }
-        this.end = end
+        this.end = data.end
 
         // Validate and assign message limit
-        if (!Number.isInteger(limit) || limit <= 0) {
+        if (!Number.isInteger(data.limit) || data.limit <= 0) {
             throw new Error('limit must be a positive integer')
         }
-        this.limit = limit
+        this.limit = data.limit
 
         // Validate and assign callback error function
-        if (typeof callbackError !== 'function') {
+        if (typeof data.callbackError !== 'function') {
             throw new Error('callbackError must be a function')
         }
-        this.callbackError = callbackError
+        this.callbackError = data.callbackError
     }
 }

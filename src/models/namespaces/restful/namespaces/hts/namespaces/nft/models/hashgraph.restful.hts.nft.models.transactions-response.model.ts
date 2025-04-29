@@ -136,13 +136,13 @@ export class _TransactionsResponse implements IHashgraph.IRestful.IHTS.INft.ITra
     /**
      * Creates an instance of _TransactionsResponse.
      * @constructor
-     * @param {Partial<_TransactionsResponse>} data - Initial data to create the transaction response
+     * @param {Partial<IHashgraph.IRestful.IHTS.INft.ITransactionsResponse>} data - Initial data to create the transaction response
      * @description Initializes a new NFT transaction response with the provided data.
      * All properties are mapped directly from the input data object, maintaining their
      * original types and formats.
      * @memberof _TransactionsResponse
      */
-    constructor(data: Partial<_TransactionsResponse>) {
+    constructor(data: Partial<IHashgraph.IRestful.IHTS.INft.ITransactionsResponse>) {
         if (data) {
             Object.assign(this, {
                 consensus_timestamp: data.consensus_timestamp,

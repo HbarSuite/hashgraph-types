@@ -128,8 +128,7 @@ export class _PrivateKeyList implements IHashgraph.IPrivateKeyList {
     /**
      * Creates a new private key list instance.
      * @constructor
-     * @param {PrivateKey[]} privateKeys - Array of Ed25519 private keys
-     * @param {KeyList} keyList - Collection of corresponding public keys
+     * @param {IHashgraph.IPrivateKeyList} data - The data to initialize the instance
      * @throws {Error} If privateKeys is not a non-empty array
      * @throws {Error} If keyList is not a valid KeyList instance
      * @throws {Error} If private and public key counts don't match
@@ -160,23 +159,20 @@ export class _PrivateKeyList implements IHashgraph.IPrivateKeyList {
      * console.log(`Keys match: ${keysMatch}`);
      * ```
      */
-    constructor(privateKeys: PrivateKey[], keyList: KeyList) {
+    constructor(data: IHashgraph.IPrivateKeyList) {
         // Validate that privateKeys is a non-empty array
-        if (!Array.isArray(privateKeys) || privateKeys.length === 0) {
+        if (!Array.isArray(data.privateKeys) || data.privateKeys.length === 0) {
             throw new Error('Invalid privateKeys: must be a non-empty array of PrivateKey objects')
         }
         
         // Ensure keyList is a valid KeyList instance
-        if (!(keyList instanceof KeyList)) {
+        if (!(data.keyList instanceof KeyList)) {
             throw new Error('Invalid keyList: must be an instance of KeyList')
         }
         
         // Verify that the number of private keys matches the number of public keys
-        if (privateKeys.length !== keyList.toArray().length) {
+        if (data.privateKeys.length !== data.keyList.toArray().length) {
             throw new Error('Mismatch between number of private keys and public keys in keyList')
         }
-
-        this.privateKeys = privateKeys
-        this.keyList = keyList
     }
 }

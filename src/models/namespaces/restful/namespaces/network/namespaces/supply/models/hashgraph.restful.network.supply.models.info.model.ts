@@ -104,7 +104,7 @@ export class _Info implements IHashgraph.IRestful.INetwork.ISupply.IInfo {
     /**
      * Creates an instance of _Info.
      * @constructor
-     * @param {{ released_supply: string; timestamp: string; total_supply: string }} data - Initial supply data
+     * @param {IHashgraph.IRestful.INetwork.ISupply.IInfo} data - Initial supply data
      * @throws {Error} If validation fails for any of:
      * - Invalid supply amounts
      * - Invalid timestamp format
@@ -116,11 +116,7 @@ export class _Info implements IHashgraph.IRestful.INetwork.ISupply.IInfo {
      * 3. Ensures logical supply relationships
      * 4. Throws detailed error messages on validation failure
      */
-    constructor(data: {
-        released_supply: string;
-        timestamp: string;
-        total_supply: string;
-    }) {
+    constructor(data: IHashgraph.IRestful.INetwork.ISupply.IInfo) {
         this.released_supply = data.released_supply;
         this.timestamp = data.timestamp;
         this.total_supply = data.total_supply;

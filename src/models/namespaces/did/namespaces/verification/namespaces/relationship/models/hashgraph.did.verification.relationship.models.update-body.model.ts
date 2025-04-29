@@ -189,10 +189,7 @@ export class _UpdateBody implements IHashgraph.IDID.IVerification.IRelationship.
      * Creates an instance of the _UpdateBody class
      * 
      * @constructor
-     * @param {string} controller - The DID of the controlling entity
-     * @param {"Ed25519VerificationKey2018"} type - The verification key type
-     * @param {string} publicKeyMultibase - The public key in multibase format
-     * @param {IHashgraph.IDID.IVerification.IRelationship.RelationshipType} [relationshipType] - Optional type of relationship
+     * @param {IHashgraph.IDID.IVerification.IRelationship.IUpdateBody} data - Partial data to initialize the update body
      * @throws {Error} When validation fails for any parameter
      * @memberof _UpdateBody
      * @description Initializes a new update body instance with:
@@ -232,16 +229,8 @@ export class _UpdateBody implements IHashgraph.IDID.IVerification.IRelationship.
      *   "z6Mk..."
      * );
      */
-    constructor(
-        controller: string,
-        type: "Ed25519VerificationKey2018",
-        publicKeyMultibase: string,
-        relationshipType?: IHashgraph.IDID.IVerification.IRelationship.RelationshipType
-    ) {
-        this.controller = controller;
-        this.type = type;
-        this.publicKeyMultibase = publicKeyMultibase;
-        this.relationshipType = relationshipType;
+    constructor(data: IHashgraph.IDID.IVerification.IRelationship.IUpdateBody) {
+        Object.assign(this, data);
         this.validate();
     }
 

@@ -88,10 +88,15 @@ export class _Mint implements IHashgraph.ILedger.IHTS.INft.IMint {
     @IsOptional()
     dao?: Hashgraph.Ledger.DAO.Config;
 
-    constructor(token_id: string, cid: string, sender?: { key?: PublicKey | KeyList; id?: AccountId }) {
-        this.token_id = token_id;
-        this.cid = cid;
-        this.sender = sender;
+    /**
+     * Creates an instance of _Mint
+     * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.INft.IMint>} data - Initial data to create the mint
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
+     */
+    constructor(data: Partial<IHashgraph.ILedger.IHTS.INft.IMint>) {
+        Object.assign(this, data);
 
         if (!this.token_id || typeof this.token_id !== 'string') {
             throw new Error('Invalid token_id: Must be a non-empty string');

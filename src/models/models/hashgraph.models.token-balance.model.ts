@@ -148,9 +148,7 @@ export class _TokenBalance implements IHashgraph.ITokenBalance {
     /**
      * Creates a new token balance instance.
      * @constructor
-     * @param {string} tokenId - Token ID in shard.realm.num format
-     * @param {Decimal | string | number} balance - Token balance amount
-     * @param {Decimal | string | number} decimals - Decimal places precision
+     * @param {IHashgraph.ITokenBalance} data - The data to initialize the instance
      * @throws {Error} If tokenId is not a valid token ID string
      * @throws {Error} If balance cannot be converted to Decimal
      * @throws {Error} If decimals is not a non-negative integer
@@ -181,23 +179,23 @@ export class _TokenBalance implements IHashgraph.ITokenBalance {
      * console.log(`Balance: ${formatted} ${preciseBalance.tokenId}`);
      * ```
      */
-    constructor(tokenId: string, balance: Decimal | string | number, decimals: Decimal | string | number) {
+    constructor(data: IHashgraph.ITokenBalance) {
         // Validate tokenId parameter
-        if (!tokenId || typeof tokenId !== 'string') {
+        if (!data.tokenId || typeof data.tokenId !== 'string') {
             throw new Error('Invalid token ID')
         }
-        this.tokenId = tokenId
+        this.tokenId = data.tokenId
 
         // Convert and validate balance parameter
         try {
-            this.balance = new Decimal(balance)
+            this.balance = new Decimal(data.balance)
         } catch (error) {
             throw new Error('Invalid balance')
         }
 
         // Convert and validate decimals parameter
         try {
-            this.decimals = new Decimal(decimals)
+            this.decimals = new Decimal(data.decimals)
             if (!this.decimals.isInteger() || this.decimals.isNegative()) {
                 throw new Error('Decimals must be a non-negative integer')
             }

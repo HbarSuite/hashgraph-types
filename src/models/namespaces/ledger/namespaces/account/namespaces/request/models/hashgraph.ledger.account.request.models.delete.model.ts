@@ -106,13 +106,7 @@ export class _Delete implements IHashgraph.ILedger.IAccounts.IRequest.IDelete {
     /**
      * Creates a new account deletion request
      * 
-     * @param {string} transferAccountId - Account ID to receive remaining balance
-     * @param {Object} [sender] - Optional sender information
-     * @param {PublicKey | KeyList} [sender.key] - Sender's public key or key list
-     * @param {AccountId} [sender.id] - Sender's account ID
-     * @param {Object} [dao] - Optional DAO configuration
-     * @param {string} dao.topicId - DAO topic ID
-     * @param {string} dao.consensusTimestamp - DAO consensus timestamp
+     * @param {IHashgraph.ILedger.IAccounts.IRequest.IDelete} data - Partial data to initialize the delete
      * 
      * @throws {Error} If transferAccountId is invalid or empty
      * @throws {Error} If transferAccountId format is incorrect
@@ -136,48 +130,35 @@ export class _Delete implements IHashgraph.ILedger.IAccounts.IRequest.IDelete {
      *   consensusTimestamp: "2024-01-01T00:00:00.000Z"
      * });
      */
-    constructor(
-        transferAccountId: string, 
-        sender?: { 
-            key?: PublicKey | KeyList, 
-            id?: AccountId 
-        },
-        dao?: {
-            topicId: string;
-            consensusTimestamp: string;
-        }
-    ) {
-        // Validate transferAccountId is non-empty string
-        if (!transferAccountId || typeof transferAccountId !== 'string') {
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.IDelete) {
+        Object.assign(this, data);
+
+        if (!this.transferAccountId || typeof this.transferAccountId !== 'string') {
             throw new Error('Invalid transferAccountId. Must be a non-empty string.');
         }
 
         // Validate account ID format (shard.realm.num)
-        if (!/^\d+\.\d+\.\d+$/.test(transferAccountId)) {
+        if (!/^\d+\.\d+\.\d+$/.test(this.transferAccountId)) {
             throw new Error('Invalid transferAccountId format. Expected format: shard.realm.num');
         }
 
-        this.transferAccountId = transferAccountId;
-
         // Validate sender if provided
-        if (sender) {
-            if (sender.key && !(sender.key instanceof PublicKey) && !(sender.key instanceof KeyList)) {
+        if (this.sender) {
+            if (this.sender.key && !(this.sender.key instanceof PublicKey) && !(this.sender.key instanceof KeyList)) {
                 throw new Error('Invalid sender key. Must be a PublicKey or KeyList instance.');
             }
-            if (sender.id && !(sender.id instanceof AccountId)) {
+            if (this.sender.id && !(this.sender.id instanceof AccountId)) {
                 throw new Error('Invalid sender id. Must be an AccountId instance.');
             }
-            this.sender = sender;
         }
 
         // Validate dao if provided
-        if (dao) {
-            if (!dao.topicId || !dao.consensusTimestamp || 
-                typeof dao.topicId !== 'string' || 
-                typeof dao.consensusTimestamp !== 'string') {
+        if (this.dao) {
+            if (!this.dao.topicId || !this.dao.consensusTimestamp || 
+                typeof this.dao.topicId !== 'string' || 
+                typeof this.dao.consensusTimestamp !== 'string') {
                 throw new Error('Invalid DAO configuration. Must include valid topicId and consensusTimestamp.');
             }
-            this.dao = dao;
         }
     }
 }

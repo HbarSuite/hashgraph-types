@@ -93,7 +93,7 @@ export class _Entity implements IHashgraph.ICommons.IKey.IEntity {
     /**
      * Creates an instance of _Entity
      * @constructor
-     * @param {Partial<_Entity>} [data] - Optional partial data to initialize the instance.
+     * @param {Partial<IHashgraph.ICommons.IKey.IEntity>} [data] - Optional partial data to initialize the instance.
      * Can contain _type and/or key properties.
      * @throws {Error} Will throw an error if key type is invalid (not in TypeEnum)
      * @throws {Error} Will throw an error if key is provided but is not a string
@@ -134,20 +134,17 @@ export class _Entity implements IHashgraph.ICommons.IKey.IEntity {
      *   console.error(e.message); // "Key must be a string"
      * }
      */
-    constructor(data?: Partial<_Entity>) {
-        if (data) {
-            this._type = data._type;
-            this.key = data.key;
+    constructor(data?: Partial<IHashgraph.ICommons.IKey.IEntity>) {
+        Object.assign(this, data);
 
-            // Validate key type if provided
-            if (this._type && !Object.values(IHashgraph.ICommons.IKey.TypeEnum).includes(this._type)) {
-                throw new Error('Invalid key type');
-            }
+        // Validate key type if provided
+        if (this._type && !Object.values(IHashgraph.ICommons.IKey.TypeEnum).includes(this._type)) {
+            throw new Error('Invalid key type');
+        }
 
-            // Validate key string if provided
-            if (this.key && typeof this.key !== 'string') {
-                throw new Error('Key must be a string');
-            }
+        // Validate key string if provided
+        if (this.key && typeof this.key !== 'string') {
+            throw new Error('Key must be a string');
         }
     }
 }

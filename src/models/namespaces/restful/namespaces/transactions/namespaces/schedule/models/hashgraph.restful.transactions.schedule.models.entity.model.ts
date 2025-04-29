@@ -1,10 +1,9 @@
 import { ApiProperty } from '@hsuite/nestjs-swagger';
 import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Hashgraph } from '../../../../../../../hashgraph.namespace';
 import { _Signature } from './hashgraph.restful.transactions.schedule.models.signature.model';
 import { IHashgraph } from '../../../../../../../../interfaces/hashgraph.namespace'
-
+import { _Commons } from '../../../../../../commons/hashgraph.commons.namespace';
 /**
  * @file hashgraph.restful.transactions.schedule.models.entity.model.ts
  * @class _Entity
@@ -65,7 +64,7 @@ import { IHashgraph } from '../../../../../../../../interfaces/hashgraph.namespa
 export class _Entity implements IHashgraph.IRestful.ITransactions.ISchedule.IEntity {
     /**
      * Administrative key
-     * @type {Hashgraph.Commons.Key.Entity}
+     * @type {_Commons.Key.Entity}
      * @optional
      * @remarks
      * - Controls schedule modifications
@@ -76,15 +75,15 @@ export class _Entity implements IHashgraph.IRestful.ITransactions.ISchedule.IEnt
     @ApiProperty({
         description: 'Administrative key controlling schedule modifications and deletions',
         required: false,
-        type: () => Hashgraph.Commons.Key.Entity,
+        type: () => _Commons.Key.Entity,
         example: {
             key: '302a300506032b6570032100e0c8ec2758a5879ffac226a13c0c516b799e72e35141a0dd828f94d37988a4b7'
         }
     })
     @IsOptional()
     @ValidateNested()
-    @Type(() => Hashgraph.Commons.Key.Entity)
-    admin_key?: Hashgraph.Commons.Key.Entity;
+    @Type(() => _Commons.Key.Entity)
+    admin_key?: _Commons.Key.Entity;
 
     /**
      * Schedule consensus timestamp
@@ -330,7 +329,7 @@ export class _Entity implements IHashgraph.IRestful.ITransactions.ISchedule.IEnt
     /**
      * Creates an instance of _Entity
      * @constructor
-     * @param {Partial<_Entity>} data - Schedule entity data
+     * @param {Partial<IHashgraph.IRestful.ITransactions.ISchedule.IEntity>} data - Schedule entity data
      * @remarks
      * - Validates all properties
      * - Transforms nested objects
@@ -365,7 +364,7 @@ export class _Entity implements IHashgraph.IRestful.ITransactions.ISchedule.IEnt
      * });
      * ```
      */
-    constructor(data?: Partial<_Entity>) {
+    constructor(data?: Partial<IHashgraph.IRestful.ITransactions.ISchedule.IEntity>) {
         if (data) {
             Object.assign(this, data);
         }

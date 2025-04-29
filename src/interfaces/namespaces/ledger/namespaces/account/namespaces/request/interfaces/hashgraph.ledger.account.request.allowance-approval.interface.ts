@@ -125,9 +125,9 @@ export interface _IAllowanceApproval {
 
     /**
      * Identifier of the token being approved
-     * @property {TokenId | NftId | string} tokenId
+     * @property {TokenId | string} tokenId
      * @description The token identifier for token or NFT allowances
-     * @type {TokenId | NftId | string}
+     * @type {TokenId | string}
      * @memberof _IAllowanceApproval
      * @optional
      * @remarks
@@ -143,7 +143,7 @@ export interface _IAllowanceApproval {
      * tokenId: TokenId.fromString("0.0.234567")
      * ```
      */
-    tokenId?: TokenId | NftId | string
+    tokenId?: TokenId | string
 
     /**
      * Quantity being approved

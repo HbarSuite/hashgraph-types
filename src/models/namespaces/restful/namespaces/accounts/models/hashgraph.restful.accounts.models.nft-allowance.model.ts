@@ -230,7 +230,7 @@ export class _NftAllowanceResponse implements IHashgraph.IRestful.IAccounts.INft
     /**
      * Creates an instance of _NftAllowanceResponse
      * @constructor
-     * @param {Partial<_NftAllowanceResponse>} [data] - Optional initialization data
+     * @param {Partial<IHashgraph.IRestful.IAccounts.INftAllowanceResponse>} [data] - Optional initialization data
      * @remarks
      * - Transforms input to proper types
      * - Validates all allowances
@@ -256,7 +256,7 @@ export class _NftAllowanceResponse implements IHashgraph.IRestful.IAccounts.INft
      * });
      * ```
      */
-    constructor(data?: Partial<_NftAllowanceResponse>) {
+    constructor(data?: Partial<IHashgraph.IRestful.IAccounts.INftAllowanceResponse>) {
         if (data) {
             this.allowances = data.allowances?.map(allowance => Object.assign(new _NftAllowance(), allowance)) || [];
             this.links = data.links ? new _Links(data.links.next) : new _Links(null);

@@ -4,7 +4,7 @@ import { _IBalance } from './namespaces/balance/hashgraph.restful.hts.balance.na
 import { _IInfo } from './namespaces/info/hashgraph.restful.hts.info.namespace'
 import { _INft } from './namespaces/nft/hashgraph.restful.hts.nft.namespace'
 import { _IRelationship } from './namespaces/reltionship/hashgraph.restful.hts.reltionship.relationship.namespace'
-
+import { _IFungible } from './namespaces/fungible/hashgraph.restful.hts.fungible.namespace'
 /**
  * @file hashgraph.restful.hts.namespace.ts
  * @namespace IHashgraph.IRestful._IHTS
@@ -117,4 +117,14 @@ export namespace _IHTS {
      * ```
      */
     export type IResponse = _IResponse
+
+    /**
+     * Fungible Token Namespace
+     * @description Provides interfaces and types for working with Fungible Tokens
+     * on the Hedera network through the REST API. Includes definitions for token
+     * balances, transfers, and account holdings.
+     * @type {_IFungible}
+     * @see {@link _IFungible} for detailed interface definitions
+     */
+    export import IFungible = _IFungible
 }

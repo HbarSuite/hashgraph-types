@@ -107,11 +107,15 @@ import { AccountId, KeyList, PublicKey } from "@hashgraph/sdk";
             id?: AccountId;
         }
 
-        constructor(token_id: string, amount: number, account_id: string, sender?: { key?: PublicKey | KeyList; id?: AccountId }) {
-            this.token_id = token_id;
-            this.amount = amount;
-            this.account_id = account_id;
-            this.sender = sender;
+        /**
+         * Creates an instance of _Wipe
+         * @constructor
+         * @param {Partial<IHashgraph.ILedger.IHTS.IFungibleToken.IWipe>} data - Initial data to create the wipe
+         * @throws {Error} If any of the provided data is invalid
+         * @remarks All provided data is validated during instantiation
+         */
+        constructor(data: Partial<IHashgraph.ILedger.IHTS.IFungibleToken.IWipe>) {
+            Object.assign(this, data);
 
             if (!this.token_id || typeof this.token_id !== 'string') {
                 throw new Error('Invalid token_id: Must be a non-empty string');

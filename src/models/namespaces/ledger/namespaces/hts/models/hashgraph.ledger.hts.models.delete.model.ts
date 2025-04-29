@@ -156,6 +156,10 @@ export class Delete implements IHashgraph.ILedger.IHTS.IDelete {
     /**
      * Token Deletion Constructor
      * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.IDelete>} data - Initial data to create the delete
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
+     * 
      * @description Initializes a new token deletion request with comprehensive
      * validation and security checks.
      * 
@@ -189,7 +193,7 @@ export class Delete implements IHashgraph.ILedger.IHTS.IDelete {
      *   }
      * });
      */
-    constructor(data?: Partial<Delete>) {
+    constructor(data?: Partial<IHashgraph.ILedger.IHTS.IDelete>) {
         if (data) {
             Object.assign(this, data);
 

@@ -174,10 +174,7 @@ export class _Info implements IHashgraph.IDID.IVC.IList.IInfo {
      * Creates an instance of the _Info class
      * 
      * @constructor
-     * @param {string} id - The unique identifier for the credential status
-     * @param {"RevocationList2021Status" | "SuspensionList2021Status"} type - The type of status list
-     * @param {number} statusListIndex - The index in the status list
-     * @param {string} statusListCredential - The URL of the status list credential
+     * @param {IHashgraph.IDID.IVC.IList.IInfo} data - Partial data to initialize the info
      * @throws {Error} When any parameter fails validation
      * @memberof _Info
      * @description Initializes a new status list info instance with:
@@ -209,30 +206,23 @@ export class _Info implements IHashgraph.IDID.IVC.IList.IInfo {
      *   ""                     // Error: Invalid statusListCredential
      * );
      */
-    constructor(
-        id: string,
-        type: "RevocationList2021Status" | "SuspensionList2021Status",
-        statusListIndex: number,
-        statusListCredential: string
-    ) {
-        if (!id || typeof id !== 'string') {
+    constructor(data: IHashgraph.IDID.IVC.IList.IInfo) {
+        Object.assign(this, data);
+
+        if (!this.id || typeof this.id !== 'string') {
             throw new Error('Invalid id');
         }
-        this.id = id;
 
-        if (!type || !["RevocationList2021Status", "SuspensionList2021Status"].includes(type)) {
+        if (!this.type || !["RevocationList2021Status", "SuspensionList2021Status"].includes(this.type)) {
             throw new Error('Invalid type');
         }
-        this.type = type;
 
-        if (!Number.isInteger(statusListIndex) || statusListIndex < 0) {
+        if (!Number.isInteger(this.statusListIndex) || this.statusListIndex < 0) {
             throw new Error('Invalid statusListIndex');
         }
-        this.statusListIndex = statusListIndex;
 
-        if (!statusListCredential || typeof statusListCredential !== 'string') {
+        if (!this.statusListCredential || typeof this.statusListCredential !== 'string') {
             throw new Error('Invalid statusListCredential');
         }
-        this.statusListCredential = statusListCredential;
     }
 }

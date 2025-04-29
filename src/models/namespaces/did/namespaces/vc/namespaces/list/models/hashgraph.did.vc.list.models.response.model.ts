@@ -127,8 +127,7 @@ export class _Response implements IHashgraph.IDID.IVC.IList.IResponse {
      * Creates an instance of the _Response class
      * 
      * @constructor
-     * @param {string} fileId - The Hashgraph file ID
-     * @param {_Info} statusInfo - The status information object
+     * @param {IHashgraph.IDID.IVC.IList.IResponse} data - Partial data to initialize the response
      * @throws {Error} When validation fails for any parameter
      * @memberof _Response
      * @description Initializes a new response instance with:
@@ -159,17 +158,18 @@ export class _Response implements IHashgraph.IDID.IVC.IList.IResponse {
      * const invalidResponse1 = new _Response("", null);        // Error: Invalid fileId
      * const invalidResponse2 = new _Response("0.0.123", {});   // Error: Invalid statusInfo
      */
-    constructor(fileId: string, statusInfo: _Info) {
+    constructor(data: IHashgraph.IDID.IVC.IList.IResponse) {
+        // Initialize the response properties
+        Object.assign(this, data);
+
         // Validate the fileId format and structure
-        if (!fileId || typeof fileId !== 'string') {
+        if (!this.fileId || typeof this.fileId !== 'string') {
             throw new Error('Invalid fileId');
         }
-        this.fileId = fileId;
 
         // Validate the statusInfo object
-        if (!statusInfo || !(statusInfo instanceof _Info)) {
+        if (!this.statusInfo || !(this.statusInfo instanceof _Info)) {
             throw new Error('Invalid statusInfo');
         }
-        this.statusInfo = statusInfo;
     }
 }

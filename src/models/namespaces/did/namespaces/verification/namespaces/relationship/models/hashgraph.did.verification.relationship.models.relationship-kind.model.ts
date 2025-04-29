@@ -221,11 +221,7 @@ export class _RelationshipKind implements IHashgraph.IDID.IVerification.IRelatio
      * Creates an instance of the _RelationshipKind class
      * 
      * @constructor
-     * @param {string} id - The unique identifier for the relationship
-     * @param {string} controller - The DID of the controlling entity
-     * @param {"Ed25519VerificationKey2018"} type - The verification key type
-     * @param {IHashgraph.IDID.IVerification.IRelationship.RelationshipType} relationshipType - The type of relationship
-     * @param {string} publicKeyMultibase - The public key in multibase format
+     * @param {IHashgraph.IDID.IVerification.IRelationship.IRelationshipKind} data - Partial data to initialize the relationship kind
      * @throws {Error} When validation fails for any parameter
      * @memberof _RelationshipKind
      * @description Initializes a new relationship kind instance with:
@@ -267,18 +263,8 @@ export class _RelationshipKind implements IHashgraph.IDID.IVerification.IRelatio
      *   "z6Mk..."
      * );
      */
-    constructor(
-        id: string,
-        controller: string,
-        type: "Ed25519VerificationKey2018",
-        relationshipType: IHashgraph.IDID.IVerification.IRelationship.RelationshipType,
-        publicKeyMultibase: string
-    ) {
-        this.id = id;
-        this.controller = controller;
-        this.type = type;
-        this.relationshipType = relationshipType;
-        this.publicKeyMultibase = publicKeyMultibase;
+    constructor(data: IHashgraph.IDID.IVerification.IRelationship.IRelationshipKind) {
+        Object.assign(this, data);
         this.validate();
     }
 

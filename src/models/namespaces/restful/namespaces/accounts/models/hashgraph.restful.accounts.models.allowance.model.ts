@@ -210,7 +210,7 @@ export class _AllowanceResponse implements IHashgraph.IRestful.IAccounts.IAllowa
     /**
      * Creates an instance of _AllowanceResponse
      * @constructor
-     * @param {Partial<_AllowanceResponse>} [data] - Optional initialization data
+     * @param {Partial<IHashgraph.IRestful.IAccounts.IAllowanceResponse>} [data] - Optional initialization data
      * @remarks
      * - Transforms input to proper types
      * - Validates all allowances
@@ -236,7 +236,7 @@ export class _AllowanceResponse implements IHashgraph.IRestful.IAccounts.IAllowa
      * });
      * ```
      */
-    constructor(data?: Partial<_AllowanceResponse>) {
+    constructor(data?: Partial<IHashgraph.IRestful.IAccounts.IAllowanceResponse>) {
         if (data) {
             this.allowances = data.allowances?.map(allowance => Object.assign(new _Allowance(), allowance)) || [];
             this.links = data.links ? new _Links(data.links.next) : new _Links(null);

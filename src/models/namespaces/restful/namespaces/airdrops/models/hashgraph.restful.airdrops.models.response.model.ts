@@ -77,12 +77,10 @@ export class _Response implements IHashgraph.IRestful.IAirdrops.IResponse {
     /**
      * Creates an instance of _Response
      * @constructor
-     * @param {Object} response - The response data
-     * @param {_Entity[]} response.airdrops - Array of airdrop entities
-     * @param {_Links} response.links - Pagination links
+     * @param {IHashgraph.IRestful.IAirdrops.IResponse} response - The response data
      * @remarks Both airdrops and links are required fields
      */
-    constructor(response: { airdrops: _Entity[]; links: _Links }) {
+    constructor(response: IHashgraph.IRestful.IAirdrops.IResponse) {
         this.airdrops = response.airdrops;
         this.links = response.links;
     }

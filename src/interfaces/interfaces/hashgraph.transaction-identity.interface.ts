@@ -1,8 +1,8 @@
 /**
  * Transaction Identity Interface
  * @export
- * @interface _ITransactionIdentity
- * @namespace IHashgraph._ITransactionIdentity
+ * @interface _ITransactionIdEntity
+ * @namespace IHashgraph._ITransactionIdEntity
  * @description Represents the identity details of a transaction in the Hashgraph network.
  * This interface captures the essential identifying information that makes a transaction
  * unique and traceable within the network.
@@ -19,7 +19,7 @@
  * @see IHashgraph._ITransactionDetails
  * @example
  * ```typescript
- * const txIdentity: _ITransactionIdentity = {
+ * const txIdentity: _ITransactionIdEntity = {
  *   account_id: "0.0.123456",
  *   nonce: 1,
  *   scheduled: false,
@@ -27,12 +27,12 @@
  * };
  * ```
  */
-export interface _ITransactionIdentity {
+export interface _ITransactionIdEntity {
 
     /**
      * The account ID associated with the transaction
      * @property {string} account_id
-     * @memberof _ITransactionIdentity
+     * @memberof _ITransactionIdEntity
      * @type {string}
      * @description Unique identifier of the account initiating or involved in the transaction.
      * Must be in the format of `shard.realm.number` (e.g., 0.0.123456).
@@ -50,7 +50,7 @@ export interface _ITransactionIdentity {
     /**
      * The nonce value for the transaction
      * @property {number} nonce
-     * @memberof _ITransactionIdentity
+     * @memberof _ITransactionIdEntity
      * @type {number}
      * @description A unique number used to ensure the uniqueness of the transaction and prevent replay attacks.
      * Must be a positive integer that hasn't been used before for the same account.
@@ -68,7 +68,7 @@ export interface _ITransactionIdentity {
     /**
      * Indicates if the transaction is scheduled
      * @property {boolean} scheduled
-     * @memberof _ITransactionIdentity
+     * @memberof _ITransactionIdEntity
      * @type {boolean}
      * @description Flag to determine if the transaction is scheduled for future execution.
      * Scheduled transactions are executed at a later time based on network conditions.
@@ -85,7 +85,7 @@ export interface _ITransactionIdentity {
     /**
      * The timestamp when the transaction becomes valid
      * @property {string} transaction_valid_start
-     * @memberof _ITransactionIdentity
+     * @memberof _ITransactionIdEntity
      * @type {string}
      * @description ISO 8601 formatted timestamp indicating when the transaction becomes valid for processing.
      * Transactions are only processed after this timestamp.

@@ -163,17 +163,17 @@ export class _TransactionDetails implements IHashgraph.ITransactionDetails {
      * console.log(`ID: ${basicDetails.transactionId.toString()}`);
      * ```
      */
-    constructor(status: Status, transactionId: TransactionId) {
+    constructor(data: IHashgraph.ITransactionDetails) {
+        Object.assign(this, data);
+
         // Validate status parameter
-        if (!(status instanceof Status)) {
+        if (!(this.status instanceof Status)) {
             throw new Error('Invalid status: must be an instance of Status')
         }
-        this.status = status
 
         // Validate transactionId parameter
-        if (!(transactionId instanceof TransactionId)) {
+        if (!(this.transactionId instanceof TransactionId)) {
             throw new Error('Invalid transactionId: must be an instance of TransactionId')
         }
-        this.transactionId = transactionId
     }
 }

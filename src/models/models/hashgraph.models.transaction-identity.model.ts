@@ -17,8 +17,8 @@ import { IHashgraph } from '../../interfaces/hashgraph.namespace';
 
 /**
  * Transaction Identity Model
- * @class _TransactionIdentity
- * @implements {IHashgraph.ITransactionIdentity}
+ * @class _TransactionIdEntity
+ * @implements {IHashgraph.ITransactionIdEntity}
  * @description Represents the identity and validation parameters of a transaction.
  * This class provides:
  * - Transaction identification
@@ -33,7 +33,7 @@ import { IHashgraph } from '../../interfaces/hashgraph.namespace';
  * @example
  * ```typescript
  * // Example of creating a basic transaction identity
- * const basicTx = new _TransactionIdentity(
+ * const basicTx = new _TransactionIdEntity(
  *   "0.0.1234",
  *   undefined,
  *   false,
@@ -41,7 +41,7 @@ import { IHashgraph } from '../../interfaces/hashgraph.namespace';
  * );
  * 
  * // Example of creating a scheduled transaction identity
- * const scheduledTx = new _TransactionIdentity(
+ * const scheduledTx = new _TransactionIdEntity(
  *   "0.0.5678",
  *   1,
  *   true,
@@ -49,7 +49,7 @@ import { IHashgraph } from '../../interfaces/hashgraph.namespace';
  * );
  * 
  * // Example of validating transaction identity parameters
- * const validateTxIdentity = (txId: _TransactionIdentity): boolean => {
+ * const validateTxIdentity = (txId: _TransactionIdEntity): boolean => {
  *   const accountPattern = /^(0|(?:[1-9]\d*))\.(0|(?:[1-9]\d*))\.(0|(?:[1-9]\d*))$/;
  *   
  *   return (
@@ -61,7 +61,7 @@ import { IHashgraph } from '../../interfaces/hashgraph.namespace';
  * };
  * 
  * // Example of formatting transaction identity for display
- * const formatTxIdentity = (txId: _TransactionIdentity): string => {
+ * const formatTxIdentity = (txId: _TransactionIdEntity): string => {
  *   const parts = [
  *     `Account: ${txId.account_id || 'N/A'}`,
  *     txId.nonce !== undefined ? `Nonce: ${txId.nonce}` : null,
@@ -73,7 +73,7 @@ import { IHashgraph } from '../../interfaces/hashgraph.namespace';
  * };
  * ```
  */
-export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
+export class _TransactionIdEntity implements IHashgraph.ITransactionIdEntity {
     /**
      * Account Identifier
      * @type {string}
@@ -85,7 +85,7 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
      * - Identifies transaction participant
      * - Part of unique transaction ID
      * - Used for authorization
-     * @memberof _TransactionIdentity
+     * @memberof _TransactionIdEntity
      * @public
      * @since 2.0.0
      * @example "0.0.1234"
@@ -108,7 +108,7 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
      * - Makes identical transactions unique
      * - Prevents replay attacks
      * - Used with identical timestamps
-     * @memberof _TransactionIdentity
+     * @memberof _TransactionIdEntity
      * @public
      * @since 2.0.0
      * @example 1
@@ -131,7 +131,7 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
      * - false: immediate execution
      * - Affects execution timing
      * - Links to schedule entity
-     * @memberof _TransactionIdentity
+     * @memberof _TransactionIdEntity
      * @public
      * @since 2.0.0
      * @default false
@@ -156,7 +156,7 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
      * - Must be valid ISO 8601
      * - Controls execution timing
      * - Part of transaction ID
-     * @memberof _TransactionIdentity
+     * @memberof _TransactionIdEntity
      * @public
      * @since 2.0.0
      * @example "2024-01-02T15:30:00.000Z"
@@ -172,22 +172,19 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
     /**
      * Creates a new transaction identity instance.
      * @constructor
-     * @param {string} [account_id] - The account ID in shard.realm.num format
-     * @param {number} [nonce] - Non-negative integer for transaction uniqueness
-     * @param {boolean} [scheduled] - Whether the transaction is scheduled
-     * @param {string} [transaction_valid_start] - ISO 8601 timestamp for validity start
+     * @param {IHashgraph.ITransactionIdEntity} data - The data to initialize the instance
      * @throws {Error} If account_id is not a string in shard.realm.num format
      * @throws {Error} If nonce is not a non-negative integer
      * @throws {Error} If scheduled is not a boolean
      * @throws {Error} If transaction_valid_start is not a valid ISO 8601 string
-     * @memberof _TransactionIdentity
+     * @memberof _TransactionIdEntity
      * @public
      * @since 2.0.0
      * 
      * @example
      * ```typescript
      * // Create a basic transaction identity
-     * const txId = new _TransactionIdentity(
+     * const txId = new _TransactionIdEntity(
      *   "0.0.1234",
      *   1,
      *   false,
@@ -195,7 +192,7 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
      * );
      * 
      * // Create a scheduled transaction identity
-     * const scheduledTxId = new _TransactionIdentity(
+     * const scheduledTxId = new _TransactionIdEntity(
      *   "0.0.5678",
      *   undefined,
      *   true,
@@ -203,36 +200,29 @@ export class _TransactionIdentity implements IHashgraph.ITransactionIdentity {
      * );
      * ```
      */
-    constructor(
-        account_id?: string,
-        nonce?: number,
-        scheduled?: boolean,
-        transaction_valid_start?: string
-    ) {
+    constructor(data: IHashgraph.ITransactionIdEntity) {
+        Object.assign(this, data);
+
         // Validate account_id parameter
-        if (account_id !== undefined && typeof account_id !== 'string') {
+        if (this.account_id !== undefined && typeof this.account_id !== 'string') {
             throw new Error('Invalid account_id: must be a string')
         }
-        this.account_id = account_id
 
         // Validate nonce parameter
-        if (nonce !== undefined && (!Number.isInteger(nonce) || nonce < 0)) {
+        if (this.nonce !== undefined && (!Number.isInteger(this.nonce) || this.nonce < 0)) {
             throw new Error('Invalid nonce: must be a non-negative integer')
         }
-        this.nonce = nonce
 
         // Validate scheduled parameter
-        if (scheduled !== undefined && typeof scheduled !== 'boolean') {
+        if (this.scheduled !== undefined && typeof this.scheduled !== 'boolean') {
             throw new Error('Invalid scheduled: must be a boolean')
         }
-        this.scheduled = scheduled
 
         // Validate transaction_valid_start parameter
-        if (transaction_valid_start !== undefined) {
-            if (typeof transaction_valid_start !== 'string' || isNaN(Date.parse(transaction_valid_start))) {
+        if (this.transaction_valid_start !== undefined) {
+            if (typeof this.transaction_valid_start !== 'string' || isNaN(Date.parse(this.transaction_valid_start))) {
                 throw new Error('Invalid transaction_valid_start: must be a valid ISO 8601 formatted string')
             }
-            this.transaction_valid_start = transaction_valid_start
         }
     }
 }

@@ -149,9 +149,7 @@ export class _MirrorNode implements IHashgraph.IMirrorNode {
     /**
      * Creates a new mirror node configuration instance.
      * @constructor
-     * @param {string} url - REST API endpoint URL
-     * @param {string} [apiKey] - Optional authentication key
-     * @param {string} [grpc] - Optional gRPC endpoint
+     * @param {IHashgraph.IMirrorNode} node - The mirror node object to be converted into an instance of _MirrorNode
      * @throws {Error} If url is not a valid HTTP/HTTPS URL
      * @throws {Error} If apiKey is provided but not a valid string
      * @throws {Error} If grpc is provided but not a valid host:port string
@@ -174,23 +172,23 @@ export class _MirrorNode implements IHashgraph.IMirrorNode {
      * );
      * ```
      */
-    constructor(url: string, apiKey?: string, grpc?: string) {
+    constructor(node: IHashgraph.IMirrorNode) {
         // Validate URL parameter
-        if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+        if (!node.url || typeof node.url !== 'string' || !node.url.startsWith('http')) {
             throw new Error('Invalid or missing Mirror Node URL');
         }
-        this.url = url;
+        this.url = node.url;
 
         // Validate optional apiKey parameter if provided
-        if (apiKey !== undefined && typeof apiKey !== 'string') {
+        if (node.apiKey !== undefined && typeof node.apiKey !== 'string') {
             throw new Error('Invalid API key');
         }
-        this.apiKey = apiKey;
+        this.apiKey = node.apiKey;
 
         // Validate optional gRPC parameter if provided
-        if (grpc !== undefined && typeof grpc !== 'string') {
+        if (node.grpc !== undefined && typeof node.grpc !== 'string') {
             throw new Error('Invalid gRPC endpoint');
         }
-        this.grpc = grpc;
+        this.grpc = node.grpc;
     }
 }

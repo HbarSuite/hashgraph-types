@@ -168,6 +168,10 @@ export class Pause implements IHashgraph.ILedger.IHTS.IPause {
     /**
      * Token Pause Constructor
      * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.IPause>} data - Initial data to create the pause
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
+     * 
      * @description Initializes a new token pause request with comprehensive
      * validation and security checks.
      * 
@@ -207,7 +211,7 @@ export class Pause implements IHashgraph.ILedger.IHTS.IPause {
      *   }
      * });
      */
-    constructor(data?: Partial<Pause>) {
+    constructor(data?: Partial<IHashgraph.ILedger.IHTS.IPause>) {
         if (data) {
             Object.assign(this, data);
 

@@ -137,12 +137,6 @@ export class _AtomicSwap implements IHashgraph.ILedger.IAccounts.IRequest.ITrans
     /**
      * Creates a new atomic swap transaction
      * @param {IHashgraph.ILedger.IAccounts.IRequest.ITransfer.IAtomicSwap} data - Atomic swap configuration
-     * @param {string} data.from - Sender's account ID
-     * @param {string} data.to - Receiver's account ID
-     * @param {string} data.token_id - Token ID to be swapped
-     * @param {number} data.decimals - Token decimal places
-     * @param {number} data.amount - Amount of tokens to swap
-     * @param {string} [data.memo] - Optional transaction memo
      * @throws {Error} When required fields are missing or invalid
      * @throws {Error} When decimals is negative
      * @throws {Error} When amount is not positive

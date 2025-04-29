@@ -45,9 +45,15 @@ export class _Info implements IHashgraph.ILedger.IHTS.INft.IInfo {
     @IsNotEmpty()
     serial_number: number;
 
-    constructor(token_id: string, serial_number: number) {
-        this.token_id = token_id;
-        this.serial_number = serial_number;
+    /**
+     * Creates an instance of _Info
+     * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.INft.IInfo>} data - Initial data to create the info
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
+     */
+    constructor(data: Partial<IHashgraph.ILedger.IHTS.INft.IInfo>) {
+        Object.assign(this, data);
 
         if (!this.token_id || typeof this.token_id !== 'string') {
             throw new Error('Invalid token_id: Must be a non-empty string');

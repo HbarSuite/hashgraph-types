@@ -281,9 +281,7 @@ export class _Seconds implements IHashgraph.ILedger.IAccounts.ISeconds {
      * Creates an instance of the _Seconds class
      * 
      * @constructor
-     * @param {number} low - The lower 32 bits value
-     * @param {number} high - The upper 32 bits value
-     * @param {boolean} unsigned - Flag indicating if value is unsigned
+     * @param {IHashgraph.ILedger.IAccounts.ISeconds} data - Partial data to initialize the seconds instance
      * @throws {Error} When validation fails for any parameter
      * @memberof _Seconds
      * @description Initializes a new seconds instance with:
@@ -351,23 +349,22 @@ export class _Seconds implements IHashgraph.ILedger.IAccounts.ISeconds {
      * const invalid5 = new _Seconds(1000, 4294967296, false); // Error: High value too large
      * const invalid6 = new _Seconds(1.5, 0, false);    // Error: Not an integer
      */
-    constructor(low: number, high: number, unsigned: boolean) {
+    constructor(data: IHashgraph.ILedger.IAccounts.ISeconds) {
+        Object.assign(this, data);
+
         // Validate low value is within valid 32-bit unsigned range
-        if (!Number.isInteger(low) || low < 0 || low > 4294967295) {
+        if (!Number.isInteger(this.low) || this.low < 0 || this.low > 4294967295) {
             throw new Error('Invalid low value. Must be an integer between 0 and 4294967295.');
         }
-        this.low = low;
 
         // Validate high value is within valid 32-bit unsigned range
-        if (!Number.isInteger(high) || high < 0 || high > 4294967295) {
+        if (!Number.isInteger(this.high) || this.high < 0 || this.high > 4294967295) {
             throw new Error('Invalid high value. Must be an integer between 0 and 4294967295.');
         }
-        this.high = high;
 
         // Validate unsigned is boolean type
-        if (typeof unsigned !== 'boolean') {
+        if (typeof this.unsigned !== 'boolean') {
             throw new Error('Invalid unsigned value. Must be a boolean.');
         }
-        this.unsigned = unsigned;
     }
 }

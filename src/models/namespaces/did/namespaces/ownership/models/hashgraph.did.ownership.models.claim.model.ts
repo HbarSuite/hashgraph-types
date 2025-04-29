@@ -1,4 +1,4 @@
-import { _MultiBase } from './hashgraph.did.ownership.models.multibase.model';
+import { IHashgraph } from '../../../../../../interfaces/hashgraph.namespace';
 import { ApiProperty } from '@hsuite/nestjs-swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
 
@@ -6,7 +6,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
  * Represents a DID ownership claim with cryptographic proof
  * 
  * @class _Claim
- * @implements {_MultiBase}
+ * @implements {IHashgraph.IDID.IOwnership.IClaim}
  * @description Implements secure ownership claims for DIDs following W3C standards.
  * Provides comprehensive functionality for:
  * - Claim creation with cryptographic proof
@@ -42,7 +42,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
  * // The claim can be used to prove ownership
  * // and generate cryptographic proofs
  */
-export class _Claim implements _MultiBase {
+export class _Claim implements IHashgraph.IDID.IOwnership.IClaim {
     /**
      * The cryptographic key in multibase format for the claim
      * @type {string}
@@ -89,7 +89,7 @@ export class _Claim implements _MultiBase {
     /**
      * Creates an instance of the _Claim class
      * @constructor
-     * @param {string} privateKeyMultibase - The cryptographic key in multibase format
+     * @param {IHashgraph.IDID.IOwnership.IClaim} data - Partial data to initialize the claim
      * @throws {Error} When:
      * - privateKeyMultibase is missing or empty
      * - Format is invalid (missing/wrong prefix)
@@ -110,10 +110,11 @@ export class _Claim implements _MultiBase {
      * const invalid2 = new _Claim({ privateKeyMultibase: '' }); // Empty key
      * const invalid3 = new _Claim({ privateKeyMultibase: 'invalid' }); // Invalid format
      */
-    constructor(privateKeyMultibase: string) {
-        if (!privateKeyMultibase) {
+    constructor(data: IHashgraph.IDID.IOwnership.IClaim) {
+        Object.assign(this, data);
+
+        if (!this.privateKeyMultibase) {
             throw new Error('Cryptographic key in multibase format is required for claim');
         }
-        this.privateKeyMultibase = privateKeyMultibase;
     }
 }

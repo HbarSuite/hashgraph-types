@@ -91,11 +91,11 @@ export class _Entity implements IHashgraph.IRestful.ICustomFees.IFixed.IEntity {
     /**
      * Creates an instance of _Entity
      * @constructor
-     * @param {Partial<_Entity>} data - Initial data to create the fixed fee entity
+     * @param {Partial<IHashgraph.IRestful.ICustomFees.IFixed.IEntity>} data - Initial data to create the fixed fee entity
      * @throws {Error} If any of the provided data is invalid
      * @remarks All provided data is validated during instantiation
      */
-    constructor(data: Partial<_Entity>) {
+    constructor(data: Partial<IHashgraph.IRestful.ICustomFees.IFixed.IEntity>) {
         Object.assign(this, data);
 
         // Validate all_collectors_are_exempt is boolean if provided

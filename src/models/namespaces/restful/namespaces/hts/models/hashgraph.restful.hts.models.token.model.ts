@@ -134,12 +134,12 @@ export class _Token implements IHashgraph.IRestful.IHTS.IToken {
     /**
      * Creates an instance of _Token
      * @constructor
-     * @param {Partial<_Token>} data - Initial data to create the token
+     * @param {Partial<IHashgraph.IRestful.IHTS.IToken>} data - Initial data to create the token
      * @description Initializes a new token instance with the provided data,
      * performing type conversions as needed
      * @memberof _Token
      */
-    constructor(data: Partial<_Token>) {
+    constructor(data: Partial<IHashgraph.IRestful.IHTS.IToken>) {
         if (data) {
             // Create new admin key instance if provided
             this.admin_key = data.admin_key ? new _Commons.Key.Entity(data.admin_key) : undefined;

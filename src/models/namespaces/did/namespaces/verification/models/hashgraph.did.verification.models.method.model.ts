@@ -209,16 +209,13 @@ export class _Method implements IHashgraph.IDID.IVerification.IMethod {
      * const invalid2 = new _Method({ id: "invalid" }); // Invalid DID URL
      * const invalid3 = new _Method({ type: "UnsupportedType" }); // Invalid type
      */
-    constructor(id: string, controller: string, type: VerificationMethodSupportedKeyType, publicKeyMultibase: string) {
+    constructor(data: IHashgraph.IDID.IVerification.IMethod) {
+        // Initialize the verification method properties
+        Object.assign(this, data);
+
         // Validate that all required fields are provided
-        if (!id || !controller || !type || !publicKeyMultibase) {
+        if (!this.id || !this.controller || !this.type || !this.publicKeyMultibase) {
             throw new Error('All fields are required for Verification Method');
         }
-        
-        // Initialize the verification method properties
-        this.id = id;
-        this.controller = controller;
-        this.type = type;
-        this.publicKeyMultibase = publicKeyMultibase;
     }
 }

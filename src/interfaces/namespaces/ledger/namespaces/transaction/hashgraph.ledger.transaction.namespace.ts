@@ -9,6 +9,9 @@
  * @subcategory Transaction
  */
 
+import { _IReceipt } from "./interfaces/hashgraph.ledger.transaction.receipt.interface";
+import { _IRecord } from "./interfaces/hashgraph.ledger.transaction.record.interface";
+
 /**
  * Transaction Namespace
  * @namespace _ITransaction
@@ -51,4 +54,18 @@
  * };
  * 
  */
-export namespace _ITransaction {}
+export namespace _ITransaction {
+    /**
+     * Interface representing a transaction record from the Hedera network.
+     * Contains the consensus result for a transaction, which might not be currently known,
+     * or may succeed or fail.
+     */
+    export type IRecord = _IRecord;
+
+    /**
+     * Interface representing a transaction receipt from the Hedera network.
+     * Contains the consensus result for a transaction, which might not be currently known,
+     * or may succeed or fail.
+     */
+    export type IReceipt = _IReceipt;
+}

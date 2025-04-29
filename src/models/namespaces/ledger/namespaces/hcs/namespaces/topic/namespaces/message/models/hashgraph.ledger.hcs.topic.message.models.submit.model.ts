@@ -222,32 +222,31 @@ export class _Submit implements IHashgraph.ILedger.IHCS.ITopic.IMessage.ISubmit 
      *   }
      * );
      */
-    constructor(
-        message: string, 
-        signature: Uint8Array, 
-        senderId: string,
-        sender?: { key?: PublicKey | KeyList; id?: AccountId },
-        dao?: IHashgraph.ILedger.IDAO.IConfig
-    ) {
+    constructor(data: Partial<IHashgraph.ILedger.IHCS.ITopic.IMessage.ISubmit>) {
+        Object.assign(this, data);
+
         // Validate message parameter
-        if (typeof message !== 'string' || message.trim().length === 0) {
+        if (typeof this.message !== 'string' || this.message.trim().length === 0) {
             throw new Error('Message must be a non-empty string');
         }
 
         // Validate signature parameter
-        if(!Buffer.isBuffer(signature)) {
+        if(!Buffer.isBuffer(this.signature)) {
             throw new Error('Signature must be a Uint8Array');
         }
 
         // Validate senderId parameter
-        if (typeof senderId !== 'string' || senderId.trim().length === 0) {
-            throw new Error('Sender ID must be a non-empty string');
+        if (!this.sender?.id) {
+            throw new Error('Sender ID is required');
         }
         
-        // Assign validated values
-        this.message = message;
-        this.signature = signature;
-        this.sender = sender;
-        this.dao = dao;
+        // Check if it's an AccountId instance
+        if (!(this.sender.id instanceof AccountId)) {
+            // If not AccountId, must be a valid string
+            const idAsString = String(this.sender.id);
+            if (idAsString.trim().length === 0) {
+                throw new Error('Sender ID must not be empty');
+            }
+        }
     }
 }

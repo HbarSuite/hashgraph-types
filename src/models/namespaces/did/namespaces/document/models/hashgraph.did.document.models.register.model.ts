@@ -78,7 +78,7 @@ export class _Register implements IHashgraph.IDID.IDocument.IRegister {
     /**
      * Creates an instance of the _Register class
      * @constructor
-     * @param {string} publicKeyMultibase - The public key in multibase format
+     * @param {IHashgraph.IDID.IDocument.IRegister} data - Partial data to initialize the register
      * @throws {Error} If publicKeyMultibase is:
      * - Not provided
      * - An empty string
@@ -99,10 +99,11 @@ export class _Register implements IHashgraph.IDID.IDocument.IRegister {
      * const invalid2 = new _Register('abc'); // Error: Invalid multibase format
      * const invalid3 = new _Register(123); // Error: Must be a string
      */
-    constructor(publicKeyMultibase: string) {
-        if (!publicKeyMultibase) {
+    constructor(data: IHashgraph.IDID.IDocument.IRegister) {
+        Object.assign(this, data);
+
+        if (!this.publicKeyMultibase) {
             throw new Error('Public Key Multibase is required for DID document registration');
         }
-        this.publicKeyMultibase = publicKeyMultibase;
     }
 }

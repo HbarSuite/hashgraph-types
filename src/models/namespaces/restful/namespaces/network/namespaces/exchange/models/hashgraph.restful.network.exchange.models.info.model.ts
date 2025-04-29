@@ -118,7 +118,7 @@ export class _Info implements IHashgraph.IRestful.INetwork.IExchange.IInfo {
     /**
      * Creates an instance of _Info.
      * @constructor
-     * @param {Partial<_Info>} [info] - Initial exchange rate information
+     * @param {Partial<IHashgraph.IRestful.INetwork.IExchange.IInfo>} [info] - Initial exchange rate information
      * 
      * @description Initializes a new exchange rate info instance:
      * - Assigns current and next rates if provided
@@ -128,7 +128,7 @@ export class _Info implements IHashgraph.IRestful.INetwork.IExchange.IInfo {
      * Note: This model uses optional initialization to support
      * various information states and partial updates.
      */
-    constructor(info?: Partial<_Info>) {
+    constructor(info?: Partial<IHashgraph.IRestful.INetwork.IExchange.IInfo>) {
         if (info) {
             this.current_rate = info.current_rate;
             this.next_rate = info.next_rate;

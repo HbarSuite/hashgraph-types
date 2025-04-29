@@ -527,12 +527,7 @@ export class _StakingInfo implements IHashgraph.ILedger.IAccounts.IStakingInfo {
      * Creates an instance of the _StakingInfo class
      * 
      * @constructor
-     * @param {boolean} declineStakingReward - Flag indicating if rewards are declined
-     * @param {string} stakePeriodStart - Start timestamp of current staking period
-     * @param {string} pendingReward - Amount of pending rewards
-     * @param {string} stakedToMe - Amount staked to this account
-     * @param {string} stakedAccountId - Account ID being staked to
-     * @param {string} stakedNodeId - Node ID being staked to
+     * @param {IHashgraph.ILedger.IAccounts.IStakingInfo} data - Partial data to initialize the staking info
      * @throws {Error} When validation fails for any parameter
      * @memberof _StakingInfo
      * @description Initializes a new staking info instance with:
@@ -617,44 +612,32 @@ export class _StakingInfo implements IHashgraph.ILedger.IAccounts.IStakingInfo {
      *   "5"
      * );
      */
-    constructor(
-        declineStakingReward: boolean,
-        stakePeriodStart: string,
-        pendingReward: string,
-        stakedToMe: string,
-        stakedAccountId: string,
-        stakedNodeId: string
-    ) {
-        this.declineStakingReward = declineStakingReward;
-
+    constructor(data: IHashgraph.ILedger.IAccounts.IStakingInfo) {
+        Object.assign(this, data);
+    
         // Validate timestamp format (ISO 8601)
-        if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/.test(stakePeriodStart)) {
+        if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/.test(this.stakePeriodStart)) {
             throw new Error('Invalid timestamp format. Expected ISO 8601 format.');
         }
-        this.stakePeriodStart = stakePeriodStart;
 
         // Validate numeric string format for pending rewards
-        if (!/^\d+(\.\d+)?$/.test(pendingReward)) {
+        if (!/^\d+(\.\d+)?$/.test(this.pendingReward)) {
             throw new Error('Invalid amount format. Expected a numeric string.');
         }
-        this.pendingReward = pendingReward;
 
         // Validate numeric string format for staked amount
-        if (!/^\d+(\.\d+)?$/.test(stakedToMe)) {
+        if (!/^\d+(\.\d+)?$/.test(this.stakedToMe)) {
             throw new Error('Invalid amount format. Expected a numeric string.');
         }
-        this.stakedToMe = stakedToMe;
 
         // Validate account ID format (shard.realm.num)
-        if (!/^\d+\.\d+\.\d+$/.test(stakedAccountId)) {
+        if (!/^\d+\.\d+\.\d+$/.test(this.stakedAccountId)) {
             throw new Error('Invalid account ID format. Expected format: shard.realm.num');
         }
-        this.stakedAccountId = stakedAccountId;
 
         // Validate node ID format (numeric string)
-        if (!/^\d+$/.test(stakedNodeId)) {
+        if (!/^\d+$/.test(this.stakedNodeId)) {
             throw new Error('Invalid node ID format. Expected a numeric string.');
         }
-        this.stakedNodeId = stakedNodeId;
     }
 }

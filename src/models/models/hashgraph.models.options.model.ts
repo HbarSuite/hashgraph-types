@@ -175,9 +175,7 @@ export class _Options implements IHashgraph.IOptions {
     /**
      * Creates a new network options instance.
      * @constructor
-     * @param {IHashgraph.IOperator} operator - Network operator configuration
-     * @param {IHashgraph.IMirrorNode} mirrorNode - Mirror node configuration
-     * @param {LedgerId} network - Target network identifier
+     * @param {IHashgraph.IOptions} options - Network options configuration
      * @throws {Error} If operator configuration is invalid
      * @throws {Error} If mirror node configuration is invalid
      * @throws {Error} If network identifier is not recognized
@@ -214,23 +212,23 @@ export class _Options implements IHashgraph.IOptions {
      * );
      * ```
      */
-    constructor(operator: IHashgraph.IOperator, mirrorNode: IHashgraph.IMirrorNode, network: LedgerId) {
+    constructor(options: IHashgraph.IOptions) {
         // Validate operator configuration
-        if (!operator || typeof operator !== 'object') {
+        if (!options.operator || typeof options.operator !== 'object') {
             throw new Error('Invalid operator configuration');
         }
-        this.operator = operator;
+        this.operator = options.operator;
 
         // Validate Mirror Node configuration
-        if (!mirrorNode || typeof mirrorNode !== 'object') {
+        if (!options.mirrorNode || typeof options.mirrorNode !== 'object') {
             throw new Error('Invalid Mirror Node configuration');
         }
-        this.mirrorNode = mirrorNode;
+        this.mirrorNode = options.mirrorNode;
 
         // Validate network identifier
-        if (!Object.values(LedgerId).includes(network)) {
+        if (!Object.values(LedgerId).includes(options.network)) {
             throw new Error('Invalid network identifier');
         }
-        this.network = network;
+        this.network = options.network;
     }
 }

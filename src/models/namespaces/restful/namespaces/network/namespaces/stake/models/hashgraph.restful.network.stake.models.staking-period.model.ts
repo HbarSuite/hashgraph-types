@@ -82,7 +82,7 @@ export class _StakingPeriod implements IHashgraph.IRestful.INetwork.IStake.IStak
     /**
      * Creates an instance of _StakingPeriod.
      * @constructor
-     * @param {{ from: string; to: string }} data - Initial period data
+     * @param {IHashgraph.IRestful.INetwork.IStake.IStakingPeriod} data - Initial period data
      * @throws {Error} If validation fails for any of:
      * - Invalid timestamp formats
      * - Invalid period boundaries
@@ -94,7 +94,7 @@ export class _StakingPeriod implements IHashgraph.IRestful.INetwork.IStake.IStak
      * 3. Ensures logical period boundaries
      * 4. Throws detailed error messages on validation failure
      */
-    constructor(data: { from: string; to: string }) {
+    constructor(data: IHashgraph.IRestful.INetwork.IStake.IStakingPeriod) {
         this.from = data.from;
         this.to = data.to;
 

@@ -122,6 +122,6 @@ export class _Register implements IHashgraph.IDID.IService.IRegister {
         if (!data.service) {
             throw new Error("Service is required");
         }
-        this.service = new _General(data.service.id, data.service.type, data.service.serviceEndpoint);
+        this.service = new _General(data.service);
     }
 }

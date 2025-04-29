@@ -57,11 +57,11 @@ export class _Amount implements IHashgraph.IRestful.ICustomFees.IFractional.IAmo
     /**
      * Creates an instance of _Amount
      * @constructor
-     * @param {Partial<_Amount>} data - Initial data to create the fractional amount
+     * @param {Partial<IHashgraph.IRestful.ICustomFees.IFractional.IAmount>} data - Initial data to create the fractional amount
      * @throws {Error} If numerator or denominator are invalid types
      * @remarks All provided data is validated during instantiation
      */
-    constructor(data: Partial<_Amount>) {
+    constructor(data: Partial<IHashgraph.IRestful.ICustomFees.IFractional.IAmount>) {
         Object.assign(this, data);
 
         // Validate numerator is a number if provided

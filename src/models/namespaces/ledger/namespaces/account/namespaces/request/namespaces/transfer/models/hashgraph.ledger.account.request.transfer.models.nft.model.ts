@@ -215,11 +215,7 @@ export class _Nft implements IHashgraph.ILedger.IAccounts.IRequest.ITransfer.INf
     /**
      * Creates a new NFT transfer instance
      * @constructor
-     * @param {string} nft - The NFT token ID in format "0.0.x"
-     * @param {string} from - The sender's account ID in format "0.0.x"
-     * @param {string} to - The receiver's account ID in format "0.0.x"
-     * @param {number} serial_number - The unique serial number of the NFT
-     * @param {string} [memo] - Optional memo for the transfer
+     * @param {Partial<IHashgraph.ILedger.IAccounts.IRequest.ITransfer.INft>} data - Partial data to initialize the NFT transfer
      * @throws {Error} If any required parameters are invalid
      * @example
      * ```typescript
@@ -232,26 +228,22 @@ export class _Nft implements IHashgraph.ILedger.IAccounts.IRequest.ITransfer.INf
      * );
      * ```
      */
-    constructor(nft: string, from: string, to: string, serial_number: number, memo?: string) {
-        this.nft = nft;
-        this.from = from;
-        this.to = to;
-        this.serial_number = serial_number;
-        this.memo = memo;
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.ITransfer.INft) {
+        Object.assign(this, data);
 
-        if (!nft || typeof nft !== 'string') {
+        if (!this.nft || typeof this.nft !== 'string') {
             throw new Error('Invalid nft: Must be a non-empty string');
         }
-        if (!from || typeof from !== 'string') {
+        if (!this.from || typeof this.from !== 'string') {
             throw new Error('Invalid from: Must be a non-empty string');
         }
-        if (!to || typeof to !== 'string') {
+        if (!this.to || typeof this.to !== 'string') {
             throw new Error('Invalid receiver: Must be a non-empty string');
         }
-        if (!Number.isInteger(serial_number) || serial_number <= 0) {
+        if (!Number.isInteger(this.serial_number) || this.serial_number <= 0) {
             throw new Error('Invalid serial_number: Must be a positive integer');
         }
-        if (memo !== undefined && typeof memo !== 'string') {
+        if (this.memo !== undefined && typeof this.memo !== 'string') {
             throw new Error('Invalid memo: Must be a string if provided');
         }
     }

@@ -104,11 +104,15 @@ export class _Wipe implements IHashgraph.ILedger.IHTS.INft.IWipe {
     @IsOptional()
     dao?: Hashgraph.Ledger.DAO.Config;
 
-    constructor(token_id: string, serial_number: number, account_id: string, sender?: { key?: PublicKey | KeyList; id?: AccountId }) {
-        this.token_id = token_id;
-        this.serial_number = serial_number;
-        this.account_id = account_id;
-        this.sender = sender;
+    /**
+     * Creates an instance of _Wipe
+     * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.INft.IWipe>} data - Initial data to create the wipe
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
+     */
+    constructor(data: Partial<IHashgraph.ILedger.IHTS.INft.IWipe>) {
+        Object.assign(this, data);
 
         if (!this.token_id || typeof this.token_id !== 'string') {
             throw new Error('Invalid token_id: Must be a non-empty string');

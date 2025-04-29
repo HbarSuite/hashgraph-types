@@ -109,7 +109,7 @@ export class _List implements IHashgraph.ICommons.IKey.IList {
     /**
      * Creates an instance of _List
      * @constructor
-     * @param {Partial<_List>} [data] - Optional partial data to initialize the instance
+     * @param {Partial<IHashgraph.ICommons.IKey.IList>} [data] - Optional partial data to initialize the instance
      * @throws {Error} Will throw an error if key array is empty or contains non-string elements
      * @throws {Error} Will throw an error if threshold is not between 1 and key array length
      * @memberof _List
@@ -135,25 +135,22 @@ export class _List implements IHashgraph.ICommons.IKey.IList {
      * // Create empty instance
      * const emptyList = new _List();
      */
-    constructor(data?: Partial<_List>) {
-        if (data) {
-            this.key = data.key;
-            this.threshold = data.threshold;
+    constructor(data?: Partial<IHashgraph.ICommons.IKey.IList>) {
+        Object.assign(this, data);
 
-            // Validate key array
-            if (!Array.isArray(this.key) || this.key.length === 0) {
-                throw new Error('Key must be a non-empty array of strings');
-            }
+        // Validate key array
+        if (!Array.isArray(this.key) || this.key.length === 0) {
+            throw new Error('Key must be a non-empty array of strings');
+        }
 
-            // Validate all elements are strings
-            if (this.key.some(k => typeof k !== 'string')) {
-                throw new Error('All elements in key array must be strings');
-            }
+        // Validate all elements are strings
+        if (this.key.some(k => typeof k !== 'string')) {
+            throw new Error('All elements in key array must be strings');
+        }
 
-            // Validate threshold is within valid range
-            if (typeof this.threshold !== 'number' || this.threshold < 1 || this.threshold > this.key.length) {
-                throw new Error(`Threshold must be a number between 1 and ${this.key.length}`);
-            }
+        // Validate threshold is within valid range
+        if (typeof this.threshold !== 'number' || this.threshold < 1 || this.threshold > this.key.length) {
+            throw new Error(`Threshold must be a number between 1 and ${this.key.length}`);
         }
     }
 }

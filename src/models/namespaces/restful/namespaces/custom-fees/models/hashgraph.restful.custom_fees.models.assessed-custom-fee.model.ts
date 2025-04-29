@@ -92,11 +92,11 @@ export class _AssessedCustomFee implements IHashgraph.IRestful.ICustomFees.IAsse
     /**
      * Creates an instance of _AssessedCustomFee
      * @constructor
-     * @param {Partial<_AssessedCustomFee>} data - Initial data to create the assessed custom fee
+     * @param {Partial<IHashgraph.IRestful.ICustomFees.IAssessedCustomFee>} data - Initial data to create the assessed custom fee
      * @throws {Error} If any of the provided data is invalid
      * @remarks All provided data is validated during instantiation
      */
-    constructor(data: Partial<_AssessedCustomFee>) {
+    constructor(data: Partial<IHashgraph.IRestful.ICustomFees.IAssessedCustomFee>) {
         Object.assign(this, data);
 
         // Validate amount is a number if provided

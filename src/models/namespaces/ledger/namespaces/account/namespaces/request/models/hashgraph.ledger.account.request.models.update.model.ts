@@ -157,14 +157,7 @@ export class _Update implements IHashgraph.ILedger.IAccounts.IRequest.IUpdate {
     /**
      * Creates an instance of _Update
      * @description Initializes a new account update request with the provided parameters
-     * @param {string} [memo] - Optional memo for the account
-     * @param {number} [maxAutomaticTokenAssociations] - Maximum automatic token associations
-     * @param {boolean} [isReceiverSignatureRequired] - Whether receiver signature is required
-     * @param {number} [stakingNode] - Node ID for staking
-     * @param {Object} [sender] - Optional sender information
-     * @param {PublicKey | KeyList} [sender.key] - The public key or key list
-     * @param {AccountId} [sender.id] - The sender's account ID
-     * @param {Hashgraph.Ledger.DAO.Config} [dao] - Optional DAO configuration
+     * @param {Partial<IHashgraph.ILedger.IAccounts.IRequest.IUpdate>} data - Partial data to initialize the update
      * @throws {Error} If memo is not a string
      * @throws {Error} If maxAutomaticTokenAssociations is negative
      * @throws {Error} If isReceiverSignatureRequired is not a boolean
@@ -193,52 +186,46 @@ export class _Update implements IHashgraph.ILedger.IAccounts.IRequest.IUpdate {
      * );
      * ```
      */
-    constructor(
-        memo?: string,
-        maxAutomaticTokenAssociations?: number,
-        isReceiverSignatureRequired?: boolean,
-        stakingNode?: number,
-        sender?: { key?: PublicKey | KeyList, id?: AccountId },
-        dao?: Hashgraph.Ledger.DAO.Config
-    ) {
+    constructor(data: IHashgraph.ILedger.IAccounts.IRequest.IUpdate) {
+        Object.assign(this, data);
+
         // Validate memo if provided
-        if (memo !== undefined && typeof memo !== 'string') {
+        if (this.memo !== undefined && typeof this.memo !== 'string') {
             throw new Error('Invalid memo. Must be a string.');
         }
-        this.memo = memo;
 
         // Validate maxAutomaticTokenAssociations if provided
-        if (maxAutomaticTokenAssociations !== undefined && (typeof maxAutomaticTokenAssociations !== 'number' || maxAutomaticTokenAssociations < 0)) {
+        if (this.maxAutomaticTokenAssociations !== undefined && (typeof this.maxAutomaticTokenAssociations !== 'number' || this.maxAutomaticTokenAssociations < 0)) {
             throw new Error('Invalid maxAutomaticTokenAssociations. Must be a non-negative number.');
         }
-        this.maxAutomaticTokenAssociations = maxAutomaticTokenAssociations;
+        this.maxAutomaticTokenAssociations = this.maxAutomaticTokenAssociations;
 
         // Validate isReceiverSignatureRequired if provided
-        if (isReceiverSignatureRequired !== undefined && typeof isReceiverSignatureRequired !== 'boolean') {
+        if (this.isReceiverSignatureRequired !== undefined && typeof this.isReceiverSignatureRequired !== 'boolean') {
             throw new Error('Invalid isReceiverSignatureRequired. Must be a boolean.');
         }
-        this.isReceiverSignatureRequired = isReceiverSignatureRequired;
+        this.isReceiverSignatureRequired = this.isReceiverSignatureRequired;
 
         // Validate stakingNode if provided
-        if (stakingNode !== undefined && (typeof stakingNode !== 'number' || stakingNode < 0)) {
+        if (this.stakingNode !== undefined && (typeof this.stakingNode !== 'number' || this.stakingNode < 0)) {
             throw new Error('Invalid stakingNode. Must be a non-negative number.');
         }
-        this.stakingNode = stakingNode;
+        this.stakingNode = this.stakingNode;
 
         // Validate sender if provided
-        if (sender) {
-            if (sender.key && !(sender.key instanceof PublicKey) && !(sender.key instanceof KeyList)) {
+        if (this.sender) {
+            if (this.sender.key && !(this.sender.key instanceof PublicKey) && !(this.sender.key instanceof KeyList)) {
                 throw new Error('Invalid sender key. Must be a PublicKey or KeyList instance.');
             }
-            if (sender.id && !(sender.id instanceof AccountId)) {
+            if (this.sender.id && !(this.sender.id instanceof AccountId)) {
                 throw new Error('Invalid sender id. Must be an AccountId instance.');
             }
-            this.sender = sender;
+            this.sender = this.sender;
         }
 
         // Assign DAO config if provided
-        if (dao) {
-            this.dao = dao;
+        if (this.dao) {
+            this.dao = this.dao;
         }
     }
 }

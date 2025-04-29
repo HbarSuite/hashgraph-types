@@ -1,4 +1,4 @@
-import { _MultiBase } from './hashgraph.did.ownership.models.multibase.model';
+import { IHashgraph } from '../../../../../../interfaces/hashgraph.namespace';
 import { ApiProperty } from '@hsuite/nestjs-swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
 
@@ -6,7 +6,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
  * Represents a DID ownership registration with cryptographic verification
  * 
  * @class _Register
- * @implements {_MultiBase}
+ * @implements {IHashgraph.IDID.IOwnership.IRegister}
  * @description Implements secure DID ownership registration following W3C standards.
  * Provides comprehensive functionality for:
  * - Initial ownership registration
@@ -42,7 +42,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
  * // The registration can be used to establish
  * // and transfer DID ownership
  */
-export class _Register implements _MultiBase {
+export class _Register implements IHashgraph.IDID.IOwnership.IRegister {
     /**
      * The cryptographic key in multibase format for registration
      * @type {string}
@@ -89,7 +89,7 @@ export class _Register implements _MultiBase {
     /**
      * Creates an instance of the _Register class
      * @constructor
-     * @param {string} privateKeyMultibase - The cryptographic key in multibase format
+     * @param {IHashgraph.IDID.IOwnership.IRegister} data - Partial data to initialize the register
      * @throws {Error} When:
      * - privateKeyMultibase is missing or empty
      * - Format is invalid (missing/wrong prefix)
@@ -110,10 +110,11 @@ export class _Register implements _MultiBase {
      * const invalid2 = new _Register({ privateKeyMultibase: '' }); // Empty key
      * const invalid3 = new _Register({ privateKeyMultibase: 'invalid' }); // Invalid format
      */
-    constructor(privateKeyMultibase: string) {
-        if (!privateKeyMultibase || privateKeyMultibase.trim() === '') {
+    constructor(data: IHashgraph.IDID.IOwnership.IRegister) {
+        Object.assign(this, data);
+
+        if (!this.privateKeyMultibase || this.privateKeyMultibase.trim() === '') {
             throw new Error('Cryptographic key in multibase format is required for registration');
         }
-        this.privateKeyMultibase = privateKeyMultibase;
     }
 }

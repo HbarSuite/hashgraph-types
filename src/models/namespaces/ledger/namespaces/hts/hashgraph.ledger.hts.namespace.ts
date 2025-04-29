@@ -10,6 +10,7 @@ import { _FungibleToken } from './namespaces/fungible-token/hashgraph.ledger.hts
 import { _Nft } from './namespaces/nft/hashgraph.ledger.hts.nft.namespace'
 import { _Associate } from './models/hashgraph.ledger.hts.models.associate.model'
 import { _Dissociate } from './models/hashgraph.ledger.hts.models.dissociate.model'
+import { _Fees } from "./namespaces/fees/validators.token.fee.namespace"
 
 /**
  * @file Hedera Token Service (HTS) Namespace
@@ -365,6 +366,14 @@ export namespace _HTS {
      * });
      */
     export import Nft = _Nft
+
+    /**
+     * Fees operations namespace
+     * @namespace Fees
+     * @description Provides specialized operations for managing token fees,
+     * including custom fee configurations and fee schedules.
+     */
+    export import Fees = _Fees
 
     /**
      * Atomic Swap Interface

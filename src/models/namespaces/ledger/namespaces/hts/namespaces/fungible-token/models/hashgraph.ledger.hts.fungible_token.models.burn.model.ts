@@ -89,10 +89,15 @@ export class _Burn implements IHashgraph.ILedger.IHTS.IFungibleToken.IBurn {
         id?: AccountId;
     }
 
-    constructor(token_id: string, amount: number, sender?: { key?: PublicKey | KeyList; id?: AccountId }) {
-        this.token_id = token_id;
-        this.amount = amount;
-        this.sender = sender;
+    /**
+     * Creates an instance of _Burn
+     * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.IFungibleToken.IBurn>} data - Initial data to create the burn
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
+     */
+    constructor(data: Partial<IHashgraph.ILedger.IHTS.IFungibleToken.IBurn>) {
+        Object.assign(this, data);
 
         if (!this.token_id || typeof this.token_id !== 'string') {
             throw new Error('Invalid token_id: Must be a non-empty string');

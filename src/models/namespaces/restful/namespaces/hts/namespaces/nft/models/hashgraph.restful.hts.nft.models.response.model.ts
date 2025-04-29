@@ -91,13 +91,13 @@ export class _Response implements IHashgraph.IRestful.IHTS.INft.IResponse {
     /**
      * Creates an instance of _Response.
      * @constructor
-     * @param {Partial<_Response>} data - Initial data to create the response
+     * @param {Partial<IHashgraph.IRestful.IHTS.INft.IResponse>} data - Initial data to create the response
      * @description Initializes a new NFT response instance with the provided data.
      * If NFT data is provided, it creates new Entity instances for each NFT.
      * If pagination links are provided, it creates a new Links instance.
      * @memberof _Response
      */
-    constructor(data: Partial<_Response>) {
+    constructor(data: Partial<IHashgraph.IRestful.IHTS.INft.IResponse>) {
         if (data) {
             this.nfts = data.nfts ? data.nfts.map(nft => new _Nft.Entity(nft)) : undefined;
             this.links = data.links ? new _Links(data.links.next) : undefined;

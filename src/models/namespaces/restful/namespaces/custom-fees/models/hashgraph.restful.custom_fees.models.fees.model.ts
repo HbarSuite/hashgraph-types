@@ -109,11 +109,11 @@ export class _Fees implements IHashgraph.IRestful.ICustomFees.IFees {
     /**
      * Creates an instance of _Fees
      * @constructor
-     * @param {Partial<_Fees>} data - Partial data to initialize the fees
+     * @param {Partial<IHashgraph.IRestful.ICustomFees.IFees>} data - Partial data to initialize the fees
      * @throws {Error} When data validation fails
      * @remarks All provided data is validated during instantiation
      */
-    constructor(data: Partial<_Fees>) {
+    constructor(data: Partial<IHashgraph.IRestful.ICustomFees.IFees>) {
         Object.assign(this, data);
 
         // Validate created_timestamp is a string if provided

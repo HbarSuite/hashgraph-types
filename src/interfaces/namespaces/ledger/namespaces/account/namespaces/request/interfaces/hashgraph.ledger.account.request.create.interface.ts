@@ -88,7 +88,7 @@ export interface _ICreate {
      * @description Entity responsible for creating and funding the new account
      * @type {Object}
      * @memberof _ICreate
-     * @required
+     * @optional
      * @remarks
      * - Must have sufficient balance for account creation fee
      * - Must have permission to create accounts
@@ -101,7 +101,7 @@ export interface _ICreate {
      * }
      * ```
      */
-    sender: {
+    sender?: {
         key?: PublicKey | KeyList;
         id?: AccountId;
     }
@@ -112,7 +112,7 @@ export interface _ICreate {
      * @description Starting balance for the new account in tinybars
      * @type {number}
      * @memberof _ICreate
-     * @required
+     * @optional
      * @remarks
      * - Minimum balance requirements apply
      * - 1 ℏ = 100,000,000 tinybars
@@ -124,7 +124,7 @@ export interface _ICreate {
      * balance: 1000000000
      * ```
      */
-    balance: number
+    balance?: number
 
     /**
      * Automatic token association limit

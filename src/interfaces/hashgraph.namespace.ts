@@ -1,5 +1,5 @@
 import { _ITransactionDetails } from './interfaces/hashgraph.transaction-details.interface'
-import { _ITransactionIdentity } from './interfaces/hashgraph.transaction-identity.interface'
+import { _ITransactionIdEntity } from './interfaces/hashgraph.transaction-identity.interface'
 import { _IPrivateKeyList } from './interfaces/hashgraph.private-keylist.interface'
 import { _ITokenBalance } from './interfaces/hashgraph.token-balance.interface'
 import { _IAccountBalance } from './interfaces/hashgraph.account-balance.interface'
@@ -22,7 +22,7 @@ import { _IRestful } from './namespaces/restful/hashgraph.restful.namespace'
  * @category Namespaces
  * @since 2.0.0
  * @property {typeof _ITransactionDetails} ITransactionDetails - Interface for transaction details and metadata
- * @property {typeof _ITransactionIdentity} ITransactionIdentity - Interface for transaction identification
+ * @property {typeof _ITransactionIdEntity} ITransactionIdEntity - Interface for transaction identification
  * @property {typeof _IPrivateKeyList} IPrivateKeyList - Interface for managing lists of private keys
  * @property {typeof _ITokenBalance} ITokenBalance - Interface for token balance information
  * @property {typeof _IAccountBalance} IAccountBalance - Interface for account balance details
@@ -77,20 +77,20 @@ export namespace IHashgraph {
 
     /**
      * Transaction Identity Interface
-     * @type {_ITransactionIdentity}
+     * @type {_ITransactionIdEntity}
      * @description Defines the structure for uniquely identifying transactions
      * within the Hashgraph network.
      * @memberof IHashgraph
      * @since 2.0.0
      * @example
      * ```typescript
-     * const txId: IHashgraph.ITransactionIdentity = {
+     * const txId: IHashgraph.ITransactionIdEntity = {
      *   transactionId: "0.0.1234@1234567890.000000000",
      *   nodeId: "0.0.3"
      * };
      * ```
      */
-    export type ITransactionIdentity = _ITransactionIdentity
+    export type ITransactionIdEntity = _ITransactionIdEntity
 
     /**
      * Private Key List Interface

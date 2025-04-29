@@ -137,7 +137,7 @@ export class _Create implements IHashgraph.ILedger.IHCS.ITopic.ICreate {
         type: () => 'string',
         required: false
     })
-    validatorConsensusTimestamp?: string
+    validatorConsensusTimestamp: string
 
     /**
      * Topic Creation Constructor
@@ -174,7 +174,7 @@ export class _Create implements IHashgraph.ILedger.IHCS.ITopic.ICreate {
      * });
      */
     constructor(data?: IHashgraph.ILedger.IHCS.ITopic.ICreate) {
-        if (data) {
+        if (data) {            
             // Assign key and validate its type
             this.key = data.key
             if (this.key && !(this.key instanceof PublicKey) && !(this.key instanceof KeyList)) {

@@ -113,7 +113,7 @@ export class _Signature implements IHashgraph.IRestful.ITransactions.ISchedule.I
     /**
      * Creates an instance of _Signature
      * @constructor
-     * @param {Partial<_Signature>} data - Signature data
+     * @param {Partial<IHashgraph.IRestful.ITransactions.ISchedule.ISignature>} data - Signature data
      * @remarks
      * - Validates all properties
      * - Ensures data integrity
@@ -137,7 +137,7 @@ export class _Signature implements IHashgraph.IRestful.ITransactions.ISchedule.I
      * });
      * ```
      */
-    constructor(data?: Partial<_Signature>) {
+    constructor(data?: Partial<IHashgraph.IRestful.ITransactions.ISchedule.ISignature>) {
         if (data) {
             this.consensus_timestamp = data.consensus_timestamp;
             this.public_key_prefix = data.public_key_prefix;

@@ -1,6 +1,6 @@
 import { ApiSchema } from "@hsuite/nestjs-swagger"
 import { _TransactionDetails } from './models/hashgraph.models.transaction-details.model'
-import { _TransactionIdentity } from './models/hashgraph.models.transaction-identity.model'
+import { _TransactionIdEntity } from './models/hashgraph.models.transaction-identity.model'
 import { _PrivateKeyList } from './models/hashgraph.models.private-keylist.model'
 import { _TokenBalance } from './models/hashgraph.models.token-balance.model'
 import { _AccountBalance } from './models/hashgraph.models.account-balance.model'
@@ -65,8 +65,8 @@ export namespace Hashgraph {
   export class TransactionDetails extends _TransactionDetails {}
 
   /**
-   * @class TransactionIdentity
-   * @extends {_TransactionIdentity}
+   * @class TransactionIdEntity
+   * @extends {_TransactionIdEntity}
    * @description Manages transaction identity and authentication information.
    * Handles:
    * - Digital signatures
@@ -75,15 +75,15 @@ export namespace Hashgraph {
    * - Identity verification
    * 
    * @example
-   * const txIdentity = new TransactionIdentity({
+   * const txIdentity = new TransactionIdEntity({
    *   signerPublicKey: "302a300506032b6570032100...",
    *   signature: "signed_transaction_bytes"
    * });
    */
   @ApiSchema({
-    name: 'Hashgraph.TransactionIdentity'
+    name: 'Hashgraph.TransactionIdEntity'
   })
-  export class TransactionIdentity extends _TransactionIdentity {}
+  export class TransactionIdEntity extends _TransactionIdEntity {}
 
   /**
    * @class PrivateKeyList

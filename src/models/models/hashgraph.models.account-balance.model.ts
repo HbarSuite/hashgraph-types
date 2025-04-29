@@ -149,9 +149,7 @@ export class _AccountBalance implements IHashgraph.IAccountBalance {
     /**
      * Creates a new account balance instance.
      * @constructor
-     * @param {string} wallet - Account ID in shard.realm.num format
-     * @param {Hbar} hbars - HBAR balance amount
-     * @param {Array<IHashgraph.ITokenBalance>} tokens - Collection of token balances
+     * @param {IHashgraph.IAccountBalance} balance - The account balance object to be converted into an instance of _AccountBalance
      * @throws {Error} If wallet is not a valid account ID string
      * @throws {Error} If hbars is not a valid Hbar instance
      * @throws {Error} If tokens is not a valid array
@@ -179,23 +177,23 @@ export class _AccountBalance implements IHashgraph.IAccountBalance {
      * );
      * ```
      */
-    constructor(wallet: string, hbars: Hbar, tokens: Array<IHashgraph.ITokenBalance>) {
+    constructor(balance: IHashgraph.IAccountBalance) {
         // Validate wallet address
-        if (!wallet || typeof wallet !== 'string') {
+        if (!balance.wallet || typeof balance.wallet !== 'string') {
             throw new Error('Invalid wallet address')
         }
-        this.wallet = wallet
+        this.wallet =balance.wallet;
 
         // Validate HBAR balance
-        if (!(hbars instanceof Hbar)) {
+        if (!(balance.hbars instanceof Hbar)) {
             throw new Error('Invalid HBAR balance')
         }
-        this.hbars = hbars
+        this.hbars = balance.hbars;
 
         // Validate tokens array
-        if (!Array.isArray(tokens)) {
+        if (!Array.isArray(balance.tokens)) {
             throw new Error('Invalid tokens array')
         }
-        this.tokens = tokens
+        this.tokens = balance.tokens;
     }
 }

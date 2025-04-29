@@ -87,13 +87,13 @@ export class _Response implements IHashgraph.IRestful.IHTS.IResponse {
     /**
      * Creates an instance of _Response
      * @constructor
-     * @param {Partial<_Response>} data - Initial data to create the response
+     * @param {Partial<IHashgraph.IRestful.IHTS.IResponse>} data - Initial data to create the response
      * @description Initializes a new HTS response instance, mapping token data and pagination links.
      * If token data is provided, it creates new Token instances for each token. If links are provided,
      * it creates a new Links instance.
      * @memberof _Response
      */
-    constructor(data: Partial<_Response>) {
+    constructor(data: Partial<IHashgraph.IRestful.IHTS.IResponse>) {
         if (data) {
             // Map token data to Token instances if provided
             this.tokens = data.tokens ? data.tokens.map(token => new _Token(token)) : undefined;

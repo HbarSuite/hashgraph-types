@@ -9,8 +9,9 @@
  * @subcategory Fee Management
  */
 
-import { AccountId, CustomFixedFee, CustomFractionalFee, CustomRoyaltyFee, KeyList, PublicKey } from "@hashgraph/sdk";
+import { AccountId, KeyList, PublicKey } from "@hashgraph/sdk";
 import { IHashgraph } from '../../../../../hashgraph.namespace'
+import { _IFees } from "../namespaces/fees/validators.token.fee.namespace";
 
 /**
  * Token fee update interface for managing token economics
@@ -97,10 +98,10 @@ import { IHashgraph } from '../../../../../hashgraph.namespace'
 export interface _IUpdateFees {
     /**
      * Custom fee configurations
-     * @property {Array<CustomRoyaltyFee | CustomFractionalFee | CustomFixedFee>} customFees
+     * @property {_IFees.ICustomFees} customFees
      * @description Array of custom fee configurations to apply to the token.
      * Supports multiple fee types for flexible token economics.
-     * @type {Array<CustomRoyaltyFee | CustomFractionalFee | CustomFixedFee>}
+     * @type {_IFees.ICustomFees}
      * @memberof _IUpdateFees
      * @required
      * @remarks
@@ -146,7 +147,7 @@ export interface _IUpdateFees {
      * ]
      * ```
      */
-    customFees: Array<CustomRoyaltyFee | CustomFractionalFee | CustomFixedFee>;
+    customFees: _IFees.ICustomFees;
 
     /**
      * Transaction authorization

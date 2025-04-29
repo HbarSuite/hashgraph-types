@@ -155,13 +155,13 @@ export class _Entity implements IHashgraph.IRestful.IHTS.IRelationship.IEntity {
     /**
      * Creates an instance of _Entity.
      * @constructor
-     * @param {Partial<_Entity>} data - Initial data to create the relationship entity
+     * @param {Partial<IHashgraph.IRestful.IHTS.IRelationship.IEntity>} data - Initial data to create the relationship entity
      * @description Initializes a new token relationship entity with the provided data.
      * Performs type conversions and validations on the input data to ensure proper
      * formatting and data integrity.
      * @memberof _Entity
      */
-    constructor(data: Partial<_Entity>) {
+    constructor(data: Partial<IHashgraph.IRestful.IHTS.IRelationship.IEntity>) {
         Object.assign(this, data);
         this.automatic_association = !!data.automatic_association;
         this.balance = Number(data.balance);

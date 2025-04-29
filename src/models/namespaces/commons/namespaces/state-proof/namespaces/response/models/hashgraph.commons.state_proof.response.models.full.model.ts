@@ -108,7 +108,7 @@ export class _Full implements IHashgraph.ICommons.IStateProof.IResponse.IFull {
     /**
      * Creates an instance of _Full
      * @constructor
-     * @param {Partial<_Full>} [data] - Optional partial data to initialize the instance
+     * @param {IHashgraph.ICommons.IStateProof.IResponse.IFull} [data] - Optional partial data to initialize the instance
      * @throws {Error} Will throw an error if address books array is empty or contains invalid entries
      * @throws {Error} Will throw an error if record file is empty or in invalid format
      * @throws {Error} Will throw an error if signature files object is empty or contains invalid entries
@@ -138,23 +138,19 @@ export class _Full implements IHashgraph.ICommons.IStateProof.IResponse.IFull {
      *   console.error(error.message);
      * }
      */
-    constructor(data?: Partial<_Full>) {
-        if (data) {
-            this.address_books = data.address_books;
-            this.record_file = data.record_file;
-            this.signature_files = data.signature_files;
+    constructor(data?: Partial<IHashgraph.ICommons.IStateProof.IResponse.IFull>) {
+        Object.assign(this, data);
 
-            if (!Array.isArray(this.address_books) || this.address_books.length === 0) {
-                throw new Error('Address books must be a non-empty array of strings');
-            }
+        if (!Array.isArray(this.address_books) || this.address_books.length === 0) {
+            throw new Error('Address books must be a non-empty array of strings');
+        }
 
-            if (typeof this.record_file !== 'string' || this.record_file.trim() === '') {
-                throw new Error('Record file must be a non-empty string');
-            }
+        if (typeof this.record_file !== 'string' || this.record_file.trim() === '') {
+            throw new Error('Record file must be a non-empty string');
+        }
 
-            if (typeof this.signature_files !== 'object' || Object.keys(this.signature_files).length === 0) {
-                throw new Error('Signature files must be a non-empty object');
-            }
+        if (typeof this.signature_files !== 'object' || Object.keys(this.signature_files).length === 0) {
+            throw new Error('Signature files must be a non-empty object');
         }
     }
 }

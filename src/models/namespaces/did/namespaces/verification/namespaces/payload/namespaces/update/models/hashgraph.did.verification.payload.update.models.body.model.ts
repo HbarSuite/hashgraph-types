@@ -148,9 +148,7 @@ export class _Body implements IHashgraph.IDID.IVerification.IPayload.IUpdate.IBo
      * Creates an instance of the _Body class
      * 
      * @constructor
-     * @param {string} controller - The DID of the controller
-     * @param {"Ed25519VerificationKey2018"} type - The verification method type
-     * @param {string} publicKeyMultibase - The public key in multibase format
+     * @param {IHashgraph.IDID.IVerification.IPayload.IUpdate.IBody} data - Partial data to initialize the update body
      * @throws {Error} When validation fails for any parameter
      * @memberof _Body
      * @description Initializes a new update body instance with:
@@ -183,20 +181,15 @@ export class _Body implements IHashgraph.IDID.IVerification.IPayload.IUpdate.IBo
      * const invalid2 = new _Body("did:hedera:...", "InvalidType", "z6Mk...");   // Error: Invalid type
      * const invalid3 = new _Body("did:hedera:...", "Ed25519VerificationKey2018", "");  // Error: Invalid key
      */
-    constructor(controller: string, type: "Ed25519VerificationKey2018", publicKeyMultibase: string) {
-        if (!controller || typeof controller !== 'string') {
-            throw new Error('Controller must be a non-empty string');
-        }
-        this.controller = controller;
+    constructor(data: IHashgraph.IDID.IVerification.IPayload.IUpdate.IBody) {
+        Object.assign(this, data);
 
-        if (type !== "Ed25519VerificationKey2018") {
+        if (this.type !== "Ed25519VerificationKey2018") {
             throw new Error('Type must be "Ed25519VerificationKey2018"');
         }
-        this.type = type;
 
-        if (!publicKeyMultibase || typeof publicKeyMultibase !== 'string') {
+        if (!this.publicKeyMultibase || typeof this.publicKeyMultibase !== 'string') {
             throw new Error('Public key multibase must be a non-empty string');
         }
-        this.publicKeyMultibase = publicKeyMultibase;
     }
 }

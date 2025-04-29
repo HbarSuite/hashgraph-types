@@ -1,9 +1,8 @@
 import { ApiProperty } from '@hsuite/nestjs-swagger';
 import { IsString, IsNumber, IsBoolean, IsOptional, IsISO8601, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Hashgraph } from '../../../../../hashgraph.namespace';
 import { IHashgraph } from '../../../../../../interfaces/hashgraph.namespace';
-
+import { _Commons } from '../../../../commons/hashgraph.commons.namespace';
 /**
  * @file hashgraph.restful.accounts.models.info.model.ts
  * @class _Info
@@ -111,7 +110,7 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
 
     /**
      * Detailed balance information including crypto and token holdings
-     * @type {Hashgraph.Commons.Balance.Entity}
+     * @type {_Commons.Balance.Entity}
      * @optional
      * @remarks
      * - Includes native HBAR balance in tinybars
@@ -121,13 +120,13 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
     @ApiProperty({
         name: 'balance',
         description: 'Detailed balance information including crypto and token holdings',
-        type: () => Hashgraph.Commons.Balance.Entity,
+        type: () => _Commons.Balance.Entity,
         required: false
     })
     @IsOptional()
     @ValidateNested()
-    @Type(() => Hashgraph.Commons.Balance.Entity)
-    balance?: Hashgraph.Commons.Balance.Entity;
+    @Type(() => _Commons.Balance.Entity)
+    balance?: _Commons.Balance.Entity;
 
     /**
      * ISO 8601 timestamp of account creation
@@ -248,7 +247,7 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
 
     /**
      * Cryptographic key for account control and transaction signing
-     * @type {Hashgraph.Commons.Key.Entity}
+     * @type {_Commons.Key.Entity}
      * @remarks
      * - Can be single key or key list
      * - Supports various key types (ED25519, ECDSA, etc.)
@@ -257,12 +256,12 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
     @ApiProperty({
         name: 'key',
         description: 'Cryptographic key for account control and transaction signing',
-        type: () => Hashgraph.Commons.Key.Entity,
+        type: () => _Commons.Key.Entity,
         required: true
     })
     @ValidateNested()
-    @Type(() => Hashgraph.Commons.Key.Entity)
-    key: Hashgraph.Commons.Key.Entity;
+    @Type(() => _Commons.Key.Entity)
+    key: _Commons.Key.Entity;
 
     /**
      * Maximum number of automatic token associations
@@ -403,10 +402,10 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
     /**
      * Creates an instance of _Info
      * @constructor
-     * @param {Partial<_Info>} data - Partial data to initialize the account info
+     * @param {Partial<IHashgraph.IRestful.IAccounts.IInfo>} data - Partial data to initialize the account info
      * @throws {Error} If any of the provided data is invalid
      */
-    constructor(data: Partial<_Info>) {
+    constructor(data: Partial<IHashgraph.IRestful.IAccounts.IInfo>) {
         Object.assign(this, data);
 
         if (this.account !== undefined && typeof this.account !== 'string') {
@@ -418,7 +417,7 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
         if (this.auto_renew_period !== undefined && typeof this.auto_renew_period !== 'number') {
             throw new Error('Invalid auto_renew_period');
         }
-        if (this.balance !== undefined && !(this.balance instanceof Hashgraph.Commons.Balance.Entity)) {
+        if (this.balance !== undefined && !(this.balance instanceof _Commons.Balance.Entity)) {
             throw new Error('Invalid balance');
         }
         if (this.created_timestamp !== undefined && !this.isValidISODate(this.created_timestamp)) {
@@ -439,7 +438,7 @@ export class _Info implements IHashgraph.IRestful.IAccounts.IInfo {
         if (this.expiry_timestamp !== undefined && !this.isValidISODate(this.expiry_timestamp)) {
             throw new Error('Invalid expiry_timestamp');
         }
-        if (!(this.key instanceof Hashgraph.Commons.Key.Entity)) {
+        if (!(this.key instanceof _Commons.Key.Entity)) {
             throw new Error('Invalid key');
         }
         if (this.max_automatic_token_associations !== undefined && typeof this.max_automatic_token_associations !== 'number') {

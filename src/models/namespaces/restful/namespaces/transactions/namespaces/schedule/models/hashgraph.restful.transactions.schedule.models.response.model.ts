@@ -140,7 +140,7 @@ export class _Response implements IHashgraph.IRestful.ITransactions.ISchedule.IR
     /**
      * Creates an instance of _Response
      * @constructor
-     * @param {Partial<_Response>} data - Schedule response data
+     * @param {Partial<IHashgraph.IRestful.ITransactions.ISchedule.IResponse>} data - Schedule response data
      * @remarks
      * - Validates all properties
      * - Transforms nested objects
@@ -170,7 +170,7 @@ export class _Response implements IHashgraph.IRestful.ITransactions.ISchedule.IR
      * });
      * ```
      */
-    constructor(data?: Partial<_Response>) {
+    constructor(data?: Partial<IHashgraph.IRestful.ITransactions.ISchedule.IResponse>) {
         if (data) {
             // Transform schedule entities
             this.schedules = data.schedules ? data.schedules.map(schedule => new _Entity(schedule)) : undefined;

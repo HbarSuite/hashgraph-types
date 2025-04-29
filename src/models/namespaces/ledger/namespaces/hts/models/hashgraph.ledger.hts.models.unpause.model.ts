@@ -168,6 +168,9 @@ export class Unpause implements IHashgraph.ILedger.IHTS.IPause {
     /**
      * Token Unpause Constructor
      * @constructor
+     * @param {Partial<IHashgraph.ILedger.IHTS.IPause>} data - Initial data to create the unpause
+     * @throws {Error} If any of the provided data is invalid
+     * @remarks All provided data is validated during instantiation
      * @description Initializes a new token unpause request with comprehensive
      * validation and security checks.
      * 
@@ -207,7 +210,7 @@ export class Unpause implements IHashgraph.ILedger.IHTS.IPause {
      *   }
      * });
      */
-    constructor(data?: Partial<Unpause>) {
+    constructor(data?: Partial<IHashgraph.ILedger.IHTS.IPause>) {
         if (data) {
             Object.assign(this, data);
             

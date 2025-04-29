@@ -161,7 +161,7 @@ export class _Entity implements IHashgraph.IRestful.IHTS.INft.IEntity {
     })
     @IsOptional()
     @IsString()
-    spender_id: string;
+    spender: string;
 
     /**
      * The token ID this NFT belongs to
@@ -188,7 +188,39 @@ export class _Entity implements IHashgraph.IRestful.IHTS.INft.IEntity {
      * are optional during initialization and will be set based on the provided data object.
      * @memberof _Entity
      */
-    constructor(data: Partial<_Entity>) {
-        Object.assign(this, data);
+    constructor(entity: IHashgraph.IRestful.IHTS.INft.IEntity) {
+        if(!entity.token_id) {
+            throw new Error('Token ID is required');
+        }
+        this.token_id = entity.token_id;
+
+        if(!entity.account_id) { 
+            throw new Error('Account ID is required');
+        }
+        this.account_id = entity.account_id;
+
+        if(!entity.created_timestamp) {
+            throw new Error('Created timestamp is required');
+        }
+        this.created_timestamp = entity.created_timestamp;
+        
+        if(!entity.metadata) {
+            throw new Error('Metadata is required');
+        }
+        this.metadata = entity.metadata;
+
+        if(!entity.modified_timestamp) {
+            throw new Error('Modified timestamp is required');
+        }
+        this.modified_timestamp = entity.modified_timestamp;
+
+        if(!entity.serial_number) {
+            throw new Error('Serial number is required');
+        }
+        this.serial_number = entity.serial_number;
+
+        this.delegating_spender = entity.delegating_spender;
+        this.spender = entity.spender;
+        this.deleted = entity.deleted;
     }
 }
